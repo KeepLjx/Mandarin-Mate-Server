@@ -33,10 +33,15 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     @Value("${prop.upload-folder}")
     private String UPLOAD_FOLDER;
 
+    //检查token是否合法
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginProtectedInterceptor).addPathPatterns("/user/**").excludePathPatterns("/user/login","/user/register");
+        registry.addInterceptor(loginProtectedInterceptor).addPathPatterns("/user/**","/book/**").excludePathPatterns("/user/login","/user/register","/book");
     }
 
+    /**
+     * 图片资源读取服务
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**").addResourceLocations("file:" + UPLOAD_FOLDER);

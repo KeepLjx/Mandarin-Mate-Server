@@ -2,6 +2,7 @@ package com.mandrain_mate.service;
 
 import com.mandrain_mate.pojo.Book;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mandrain_mate.utils.Result;
 
 /**
 * @author lenovo
@@ -10,4 +11,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface BookService extends IService<Book> {
 
+    /**
+     * 获取词数所有信息业务
+     * @return
+     */
+    Result getBookInfo();
 }
