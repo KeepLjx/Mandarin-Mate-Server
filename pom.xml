@@ -49,6 +49,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
         <!--jwt校验相关api-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
