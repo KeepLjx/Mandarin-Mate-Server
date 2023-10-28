@@ -2,6 +2,7 @@ package com.mandrain_mate.service;
 
 import com.mandrain_mate.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mandrain_mate.pojo.dto.UserLoginDTO;
 import com.mandrain_mate.utils.Result;
 
 /**
@@ -17,4 +18,26 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result register(User user);
+
+    /**
+     * 用户登录业务
+     * @param userLoginDTO
+     * @return
+     */
+    Result login(UserLoginDTO userLoginDTO);
+
+    /**
+     * 更新用户存储头像路径业务
+     *
+     * @param filename
+     * @param token
+     */
+    void saveUserImg(String filename, String token);
+
+    /**
+     * 获取用户信息业务
+     * @param token
+     * @return
+     */
+    Result getUserInfo(String token);
 }

@@ -1,4 +1,9 @@
 spring:
+  # 配置SpringMVC文件上传限制，默认1M。注意MB要大写，不然报错。SpringBoot版本不同，配置项不同
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   # 配置数据源信息
   datasource:
     #配置数据源类型
@@ -9,7 +14,7 @@ spring:
     username: liujiaxin
     password: 200212
 server:
-  port: 8080
+  port: 9001
 # 配置swagger文档的访问路径，访问地址：http://127.0.0.1:8080/swagger-ui.html
 springdoc:
   swagger-ui:
@@ -23,3 +28,13 @@ logging:
         mapper: debug
         service: info
         controller: info
+#        jwt相关配置
+jwt:
+  token:
+    token-expiration: 7200000
+    token-sign-key: mandrainmate
+#文件上传路径
+prop:
+#  linux:/opt/java/mandrain_mate/
+  upload-folder: E:/code/javaweb/xios/userHeadImg/
+

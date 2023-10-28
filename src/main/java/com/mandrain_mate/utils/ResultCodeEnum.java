@@ -11,6 +11,8 @@ public enum ResultCodeEnum {
     PASSWORD_ERROR(503,"passwordError"),
     NOTLOGIN(504,"notLogin"),
     REGISTER_ERROR(506,"服务器注册失败"),
+    USER_NULL(2,"用户为空，请注册"),
+    USER_LOGIN_NULL(3,"传入参数为空,请输入"),
     USERNAME_USED(505,"userNameUsed");
 
     private Integer code;
