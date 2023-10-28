@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mandrain_mate.mapper.EvaluationMapper">
+
+    <resultMap id="BaseResultMap" type="com.mandrain_mate.pojo.Evaluation">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="wordsId" column="words_id" jdbcType="BIGINT"/>
+            <result property="score" column="score" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,words_id,score
+    </sql>
+</mapper>
