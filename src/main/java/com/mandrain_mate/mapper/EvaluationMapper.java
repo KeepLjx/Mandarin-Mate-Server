@@ -2,6 +2,7 @@ package com.mandrain_mate.mapper;
 
 import com.mandrain_mate.pojo.Evaluation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
 
 /**
 * @author lenovo
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2023-10-27 23:01:59
 * @Entity com.mandrain_mate.pojo.Evaluation
 */
+@Repository
 public interface EvaluationMapper extends BaseMapper<Evaluation> {
 
 }

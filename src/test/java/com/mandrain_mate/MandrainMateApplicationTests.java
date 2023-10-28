@@ -1,6 +1,7 @@
 package com.mandrain_mate;
 
 import com.mandrain_mate.mapper.UserMapper;
+import com.mandrain_mate.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,10 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 class MandrainMateApplicationTests {
 
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
 
     @Test
     public void testSelectList() {
-        userMapper.selectList(null).forEach(System.out::println);
+        userService.list(null).forEach(System.out::println);
+        System.out.println(userService.count());
     }
 }
