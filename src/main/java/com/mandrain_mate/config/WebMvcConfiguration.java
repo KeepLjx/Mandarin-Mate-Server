@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @BelongsPackage: com.mandrain_mate.config
  * @Author: kc
  * @CreateTime: 2023-10-28  11:39
- * @Description: TODO
+ * @Description:
  * @Version: 1.0
  */
 @Configuration
