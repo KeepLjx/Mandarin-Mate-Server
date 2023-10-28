@@ -8,3 +8,18 @@ spring:
     url: jdbc:mysql://114.55.232.24:3306/mandarin_mate?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
     username: liujiaxin
     password: 200212
+server:
+  port: 8080
+# 配置swagger文档的访问路径，访问地址：http://127.0.0.1:8080/swagger-ui.html
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+# Logger Config
+logging:
+  level:
+    com:
+      mandrain_mate:
+        mapper: debug
+        service: info
+        controller: info

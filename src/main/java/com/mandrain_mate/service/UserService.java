@@ -2,6 +2,7 @@ package com.mandrain_mate.service;
 
 import com.mandrain_mate.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mandrain_mate.utils.Result;
 
 /**
 * @author lenovo
@@ -10,4 +11,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserService extends IService<User> {
 
+    /**
+     * 用户注册业务
+     * @param user
+     * @return
+     */
+    Result register(User user);
 }
