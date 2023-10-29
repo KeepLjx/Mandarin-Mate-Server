@@ -2,6 +2,7 @@ package com.mandrain_mate.service;
 
 import com.mandrain_mate.pojo.Schedule;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mandrain_mate.utils.Result;
 
 /**
 * @author lenovo
@@ -10,4 +11,27 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface ScheduleService extends IService<Schedule> {
 
+    /**
+     * 创建用户进度表业务
+     * @param bookId
+     * @param token
+     * @return
+     */
+    Result buildSchedule(Long bookId, String token);
+
+    /**
+     * 获取用户该词书进度
+     * @param token
+     * @return
+     */
+    Result getSchedule(String token);
+
+    /**
+     * 切换用户词书
+     * @param bookId
+     * @param token
+     * @param nowBookId
+     * @return
+     */
+//    Result buildSchedule(Long bookId, String token, Long nowBookId);
 }
