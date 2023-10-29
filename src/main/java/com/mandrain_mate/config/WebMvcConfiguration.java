@@ -5,12 +5,10 @@ import com.mandrain_mate.interceptors.LoginProtectedInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 /**
@@ -28,7 +26,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     @Autowired
     private LoginProtectedInterceptor loginProtectedInterceptor;
     @Value("${prop.upload-folder}")
-    private String UPLOAD_FOLDER;
+    private String UPLOAD_PATH;
 
     //检查token是否合法
     public void addInterceptors(InterceptorRegistry registry) {
@@ -41,6 +39,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**").addResourceLocations("file:" + UPLOAD_FOLDER);
+        registry.addResourceHandler("/img/**").addResourceLocations("file:" + UPLOAD_PATH);
     }
 }
