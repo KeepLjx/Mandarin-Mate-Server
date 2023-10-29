@@ -3,6 +3,10 @@ package com.mandrain_mate.utils;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import io.jsonwebtoken.*;
+//import io.jsonwebtoken.Claims;
+//import io.jsonwebtoken.Jws;
+//import io.jsonwebtoken.Jwts;
+//import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -41,7 +45,6 @@ public class JwtHelper {
         Integer userId = (Integer)claims.get("userId");
         return userId.longValue();
     }
-
 
 
     //判断token是否有效

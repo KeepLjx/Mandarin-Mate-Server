@@ -10,6 +10,7 @@ import lombok.Data;
 /**
  * @TableName book
  */
+
 @TableName(value ="book")
 @Data
 public class Book implements Serializable {

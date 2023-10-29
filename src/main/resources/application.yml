@@ -13,8 +13,16 @@ spring:
     url: jdbc:mysql://114.55.232.24:3306/mandarin_mate?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
     username: liujiaxin
     password: 200212
+
+# 配置端口
 server:
   port: 9001
+
+# 配置MyBatis日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 # 配置swagger文档的访问路径，访问地址：http://127.0.0.1:8080/swagger-ui.html
 springdoc:
   swagger-ui:
