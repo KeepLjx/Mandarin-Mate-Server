@@ -26,6 +26,10 @@ public class bookController {
     @Autowired
     private ScheduleServiceImpl scheduleService;
 
+    /**
+     * 获取词书信息
+     * @return
+     */
     @GetMapping
     public Result getBookInfo(){
         Result result = bookService.getBookInfo();
@@ -54,6 +58,15 @@ public class bookController {
     public Result getSchedule(@RequestHeader String token){
         Result result = scheduleService.getSchedule(token);
         return result;
+    }
+
+    @GetMapping("switchBookSchedule")
+    public Result switchBookSchedule(@RequestHeader String token,
+                                     @RequestParam Long nowBookId,
+                                     @RequestParam Long switchBookId){
+        Result result = scheduleService.switchBookSchedule(token,nowBookId,switchBookId);
+        return result;
+
     }
 
 }

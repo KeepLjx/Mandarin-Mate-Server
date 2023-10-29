@@ -36,22 +36,6 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
     @Override
     public Result buildSchedule(Long bookId, String token) {
         Long userId = jwtHelper.getUserId(token);
-//        //查询数据库中是否以前就有
-//        LambdaQueryWrapper<Schedule> scheduleLambdaQueryWrapper = new LambdaQueryWrapper<>();
-//        scheduleLambdaQueryWrapper.eq(Schedule::getUserId,userId);
-//        scheduleLambdaQueryWrapper.eq(Schedule::getBookId,bookId);
-//        Schedule scheduleTemp = scheduleMapper.selectOne(scheduleLambdaQueryWrapper);
-//        //如果有则恢复学习进度
-//        if(scheduleTemp != null){
-//            LambdaUpdateWrapper<Schedule> scheduleLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
-//            scheduleLambdaUpdateWrapper.eq(Schedule::getUserId,userId);
-//            scheduleLambdaUpdateWrapper.eq(Schedule::getBookId,bookId);
-//            scheduleTemp.setIsDelete(0);
-//            scheduleMapper.update(scheduleTemp,scheduleLambdaUpdateWrapper);
-//            HashMap<Object, Object> map = new HashMap<>();
-//            map.put("userSchedule",scheduleTemp.getCompleted());
-//            return Result.ok(map);
-//        }
         Schedule schedule = new Schedule();
         schedule.setBookId(bookId);
         schedule.setUserId(userId);
@@ -59,10 +43,16 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         schedule.setIsDelete(0);
         scheduleMapper.insert(schedule);
         HashMap<Object, Object> map = new HashMap<>();
+        map.put("bookId",schedule.getBookId());
         map.put("userSchedule",schedule.getCompleted());
         return Result.ok(map);
     }
 
+    /**
+     * 获取用户进度业务实现
+     * @param token
+     * @return
+     */
     @Override
     public Result getSchedule(String token) {
         Long userId = jwtHelper.getUserId(token);
@@ -73,6 +63,44 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         HashMap<Object, Object> map = new HashMap<>();
         map.put("schedule",schedule.getCompleted());
         return Result.ok(map);
+    }
+
+    /**
+     * 用户切换词书业务实现
+     * @param token
+     * @param nowBookId
+     * @param switchBookId
+     * @return
+     */
+    @Override
+    public Result switchBookSchedule(String token, Long nowBookId, Long switchBookId) {
+        Long userId = jwtHelper.getUserId(token);
+        //查询数据库中是否以前就有
+        LambdaQueryWrapper<Schedule> scheduleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        scheduleLambdaQueryWrapper.eq(Schedule::getUserId,userId);
+        scheduleLambdaQueryWrapper.eq(Schedule::getBookId,switchBookId);
+        Schedule scheduleTemp = scheduleMapper.selectOne(scheduleLambdaQueryWrapper);
+        //关闭当前词书进度
+        LambdaUpdateWrapper<Schedule> scheduleLambdaUpdateWrapperClose = new LambdaUpdateWrapper<>();
+        scheduleLambdaUpdateWrapperClose.eq(Schedule::getBookId,nowBookId);
+        Schedule schedule = new Schedule();
+        schedule.setIsDelete(1);
+        scheduleMapper.update(schedule,scheduleLambdaUpdateWrapperClose);
+        System.out.println(scheduleTemp);
+        //如果有则恢复学习进度
+        if(scheduleTemp != null){
+            LambdaUpdateWrapper<Schedule> scheduleLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+            scheduleLambdaUpdateWrapper.eq(Schedule::getUserId,userId);
+            scheduleLambdaUpdateWrapper.eq(Schedule::getBookId,switchBookId);
+            scheduleTemp.setIsDelete(0);
+            scheduleMapper.update(scheduleTemp,scheduleLambdaUpdateWrapper);
+            HashMap<Object, Object> map = new HashMap<>();
+            map.put("bookId",scheduleTemp.getBookId());
+            map.put("userSchedule",scheduleTemp.getCompleted());
+            return Result.ok(map);
+        }
+        //如果没有，则创建新的进度
+        return buildSchedule(switchBookId,token);
     }
 }
 

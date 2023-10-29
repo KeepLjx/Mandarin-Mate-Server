@@ -26,12 +26,13 @@ public interface ScheduleService extends IService<Schedule> {
      */
     Result getSchedule(String token);
 
+
     /**
-     * 切换用户词书
-     * @param bookId
+     * 用户更改词书
      * @param token
      * @param nowBookId
+     * @param switchBookId
      * @return
      */
-//    Result buildSchedule(Long bookId, String token, Long nowBookId);
+    Result switchBookSchedule(String token, Long nowBookId, Long switchBookId);
 }
