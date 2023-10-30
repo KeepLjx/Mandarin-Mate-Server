@@ -61,6 +61,7 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         scheduleLambdaQueryWrapper.eq(Schedule::getIsDelete,0L);
         Schedule schedule = scheduleMapper.selectOne(scheduleLambdaQueryWrapper);
         HashMap<Object, Object> map = new HashMap<>();
+        map.put("bookId",schedule.getBookId());
         map.put("schedule",schedule.getCompleted());
         return Result.ok(map);
     }
@@ -101,6 +102,35 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         }
         //如果没有，则创建新的进度
         return buildSchedule(switchBookId,token);
+    }
+
+    /**
+     * 重置用户学习进度
+     * @param token
+     * @param bookId
+     * @return
+     */
+    @Override
+    public Result resetSchedule(String token, Long bookId) {
+        //通过token获取用户id
+        Long userId = jwtHelper.getUserId(token);
+        //添加修改数据条件
+        LambdaUpdateWrapper<Schedule> scheduleLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        scheduleLambdaUpdateWrapper.eq(Schedule::getUserId,userId);
+        scheduleLambdaUpdateWrapper.eq(Schedule::getBookId,bookId);
+        Schedule schedule = new Schedule();
+        schedule.setCompleted(0L);
+        //将用户学习进度修改为0
+        scheduleMapper.update(schedule,scheduleLambdaUpdateWrapper);
+        //添加查询条件
+        LambdaQueryWrapper<Schedule> scheduleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        scheduleLambdaQueryWrapper.eq(Schedule::getUserId,userId);
+        scheduleLambdaQueryWrapper.eq(Schedule::getBookId,bookId);
+        //查询用户重置之后的学习进度相关信息
+        Schedule schedule1 = scheduleMapper.selectOne(scheduleLambdaQueryWrapper);
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("schedule",schedule1);
+        return Result.ok(map);
     }
 }
 

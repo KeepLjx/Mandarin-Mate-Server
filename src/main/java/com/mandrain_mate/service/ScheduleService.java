@@ -35,4 +35,12 @@ public interface ScheduleService extends IService<Schedule> {
      * @return
      */
     Result switchBookSchedule(String token, Long nowBookId, Long switchBookId);
+
+    /**
+     * 重置用户学习进度
+     * @param token
+     * @param bookId
+     * @return
+     */
+    Result resetSchedule(String token, Long bookId);
 }

@@ -60,6 +60,13 @@ public class bookController {
         return result;
     }
 
+    /**
+     * 用户选择其他词书
+     * @param token
+     * @param nowBookId
+     * @param switchBookId
+     * @return
+     */
     @GetMapping("switchBookSchedule")
     public Result switchBookSchedule(@RequestHeader String token,
                                      @RequestParam Long nowBookId,
@@ -69,4 +76,11 @@ public class bookController {
 
     }
 
+
+    @GetMapping("resetSchedule")
+    public Result resetSchedule(@RequestHeader String token,
+                                @RequestParam Long bookId){
+        Result result = scheduleService.resetSchedule(token,bookId);
+        return result;
+    }
 }
