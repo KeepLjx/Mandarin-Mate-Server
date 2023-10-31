@@ -2,6 +2,7 @@ package com.mandrain_mate.service;
 
 import com.mandrain_mate.pojo.WordsInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mandrain_mate.utils.Result;
 
 /**
 * @author lenovo
@@ -10,4 +11,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface WordsInfoService extends IService<WordsInfo> {
 
+    /**
+     * 获取词书中的单词详细信息
+     * @param bookId
+     * @return
+     */
+    Result getBookInfo(Long bookId);
 }

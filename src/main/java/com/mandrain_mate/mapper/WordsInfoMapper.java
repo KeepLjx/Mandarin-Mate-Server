@@ -1,8 +1,12 @@
 package com.mandrain_mate.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mandrain_mate.pojo.Book;
 import com.mandrain_mate.pojo.WordsInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
 * @author lenovo
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface WordsInfoMapper extends BaseMapper<WordsInfo> {
+
 
 }
 

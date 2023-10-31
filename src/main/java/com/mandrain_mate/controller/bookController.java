@@ -3,6 +3,7 @@ package com.mandrain_mate.controller;
 import com.mandrain_mate.service.BookService;
 import com.mandrain_mate.service.impl.BookServiceImpl;
 import com.mandrain_mate.service.impl.ScheduleServiceImpl;
+import com.mandrain_mate.service.impl.WordsInfoServiceImpl;
 import com.mandrain_mate.utils.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class bookController {
     private BookServiceImpl bookService;
     @Autowired
     private ScheduleServiceImpl scheduleService;
+    @Autowired
+    private WordsInfoServiceImpl wordsInfoService;
 
     /**
      * 获取词书信息
@@ -77,10 +80,29 @@ public class bookController {
     }
 
 
+    /**
+     * 用户重置词书学习进度
+     * @param token
+     * @param bookId
+     * @return
+     */
     @GetMapping("resetSchedule")
     public Result resetSchedule(@RequestHeader String token,
                                 @RequestParam Long bookId){
         Result result = scheduleService.resetSchedule(token,bookId);
         return result;
+    }
+
+
+    /**
+     * 获取学习词书的单词信息
+     * @param bookId
+     * @return
+     */
+    @GetMapping("getBookWordsInfo")
+    public Result getBookInfo(
+                              @RequestParam Long bookId){
+        Result result = wordsInfoService.getBookInfo(bookId);
+        return  result;
     }
 }

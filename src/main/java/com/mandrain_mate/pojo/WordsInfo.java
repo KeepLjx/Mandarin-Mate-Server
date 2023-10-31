@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * @TableName words_info
  */
-@TableName(value ="words_info")
+@TableName(value ="words")
 @Data
 public class WordsInfo implements Serializable {
     private Long wordsId;
@@ -26,6 +26,8 @@ public class WordsInfo implements Serializable {
     private String content;
 
     private String typeTag;
+
+    private String voicePath;
 
     private static final long serialVersionUID = 1L;
 }
