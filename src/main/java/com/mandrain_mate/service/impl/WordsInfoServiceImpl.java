@@ -34,6 +34,7 @@ public class WordsInfoServiceImpl extends ServiceImpl<WordsInfoMapper, WordsInfo
     public Result getBookInfo(Long bookId) {
         LambdaQueryWrapper<WordsInfo> bookLambdaQueryWrapper = new LambdaQueryWrapper<>();
         bookLambdaQueryWrapper.eq(WordsInfo::getBookId,bookId);
+        bookLambdaQueryWrapper.orderByAsc(WordsInfo::getWordsId);
         List<WordsInfo> wordsInfos = wordsInfoMapper.selectList(bookLambdaQueryWrapper);
         HashMap<Object, Object> map = new HashMap<>();
         map.put("wordsInfo",wordsInfos);

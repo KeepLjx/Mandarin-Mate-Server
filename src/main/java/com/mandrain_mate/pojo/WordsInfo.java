@@ -19,8 +19,6 @@ public class WordsInfo implements Serializable {
 
     private String wordsSpell;
 
-    private String wordsTone;
-
     private String example;
 
     private String content;
