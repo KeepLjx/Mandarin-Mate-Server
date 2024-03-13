@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mandrain_mate.mapper.WordsInfoMapper">
+<mapper namespace="com.mandarin_mate.mapper.WordsInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.mandrain_mate.pojo.WordsInfo">
+    <resultMap id="BaseResultMap" type="com.mandarin_mate.pojo.WordsInfo">
             <id property="wordsId" column="words_id" jdbcType="BIGINT"/>
             <result property="bookId" column="book_id" jdbcType="BIGINT"/>
             <result property="wordsSpell" column="words_spell" jdbcType="VARCHAR"/>

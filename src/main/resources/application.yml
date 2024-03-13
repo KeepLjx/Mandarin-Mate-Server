@@ -43,6 +43,10 @@ jwt:
     token-sign-key: mandrainmate
 #文件上传路径
 prop:
-#  linux:/opt/java/mandrain_mate/
+#  linux:/opt/java/mandarin_mate/
   upload-folder: E:/code/javaweb/xios/userHeadImg/
 
+mandarin-mate:
+  wechat:
+    appid: wx5ce777823e868fb4
+    secret: e9ef6cccd4b59e9614f0a7c50b5c3b90

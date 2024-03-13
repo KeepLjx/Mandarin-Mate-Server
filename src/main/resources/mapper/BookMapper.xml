@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mandrain_mate.mapper.BookMapper">
+<mapper namespace="com.mandarin_mate.mapper.BookMapper">
 
-    <resultMap id="BaseResultMap" type="com.mandrain_mate.pojo.Book">
+    <resultMap id="BaseResultMap" type="com.mandarin_mate.pojo.Book">
             <id property="bookId" column="book_id" jdbcType="BIGINT"/>
             <result property="bookImg" column="book_img" jdbcType="VARCHAR"/>
             <result property="bookIntro" column="book_intro" jdbcType="VARCHAR"/>
