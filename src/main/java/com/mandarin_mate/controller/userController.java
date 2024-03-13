@@ -2,7 +2,9 @@ package com.mandarin_mate.controller;
 
 import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
+import com.mandarin_mate.pojo.vo.UserLoginVO;
 import com.mandarin_mate.service.impl.UserServiceImpl;
+import com.mandarin_mate.utils.JwtHelper;
 import com.mandarin_mate.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +35,9 @@ public class userController {
     private UserServiceImpl userService;
     @Value("${prop.upload-folder}")
     private String UPLOAD_FOLDER;
+
+    @Autowired
+    private JwtHelper jwtHelper;
 
 
     /**
@@ -119,20 +124,13 @@ public class userController {
         User user = userService.wxLogin(userLoginDTO);
 
         //为微信用户生成jwt令牌
-//        Map<String, Object> claims = new HashMap<>();
-//        claims.put(JwtClaimsConstant.USER_ID, user.getId());
-//        String token = JwtUtil.createJWT(jwtProperties.getUserSecretKey(), jwtProperties.getUserTtl(), claims);
-//
-//
-//        UserLoginVO userLoginVO = UserLoginVO.builder()
-//                .id(user.getId())
-//                .openid(user.getOpenid())
-//                .token(token)
-//                .build();
-//        return Result.success(userLoginVO);
-
-
-        return Result.ok(userLoginDTO);
+        Map<String, Object> claims = new HashMap<>();
+        String token = jwtHelper.createToken(user.getOpenId());
+        UserLoginVO userLoginVO = UserLoginVO.builder()
+                .openid(user.getOpenId())
+                .token(token)
+                .createTime(user.getCreateTime())
+                .build();
+        return Result.ok(userLoginVO);
     }
-
 }
