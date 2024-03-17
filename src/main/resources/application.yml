@@ -1,0 +1,71 @@
+spring:
+  # 配置SpringMVC文件上传限制，默认1M。注意MB要大写，不然报错。SpringBoot版本不同，配置项不同
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  # 配置数据源信息
+  datasource:
+    #配置数据源类型
+    type: com.zaxxer.hikari.HikariDataSource
+    #配置连接数据库的各个信息
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://114.55.232.24:3306/mandarin_mate?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    username: liujiaxin
+    password: 200212
+  mail:
+    host: smtp.163.com
+    username: 18699551321@163.com
+    password: DVCXSMAKDJWFSTUA
+    default-encoding: UTF-8
+    properties:
+      smtp:
+        ssl:
+          enable: false
+          required: false
+      #开启debug模式，这样邮件发送过程的日志会在控制台打印出来，方便排查错误
+      debug: true
+  data:
+    redis:
+      host: 39.101.140.144
+      port: 6379
+      password: 200212
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 10
+          min-idle: 1
+          time-between-eviction-runs: 10s
+      database: 1
+# 配置端口
+server:
+  port: 9001
+
+# 配置MyBatis日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 配置swagger文档的访问路径，访问地址：http://127.0.0.1:8080/swagger-ui.html
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+# Logger Config
+logging:
+  level:
+    com:
+      mandrain_mate:
+        mapper: debug
+        service: info
+        controller: info
+#        jwt相关配置
+jwt:
+  token:
+    token-expiration: 7200000
+    token-sign-key: mandrainmate
+#文件上传路径
+prop:
+#  linux:/opt/java/mandrain_mate/
+  upload-folder: E:/code/javaweb/xios/userHeadImg/
+
