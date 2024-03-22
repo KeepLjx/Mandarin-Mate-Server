@@ -50,10 +50,9 @@ mandarin-mate:
   wechat:
     appid: wx5ce777823e868fb4
     secret: e9ef6cccd4b59e9614f0a7c50b5c3b90
-
-alioss:
-  endpoint: oss-cn-beijing.aliyuncs.com
-  access-key-id: LTAI5tE5WKwASov6AE1i3xoy
-  access-key-secret: DopouX54emaZ3fsehnQgXsovKUOLbR
-  bucket-name: mandarin-mate
+  alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: LTAI5tE5WKwASov6AE1i3xoy
+    access-key-secret: DopouX54emaZ3fsehnQgXsovKUOLbR
+    bucket-name: mandarin-mate
 
