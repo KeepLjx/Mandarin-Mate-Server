@@ -38,18 +38,18 @@ public class JwtHelper {
     }
 
     //微信登录返回token
-    public  String createToken(String openId) {
-        System.out.println("tokenExpiration = " + tokenExpiration);
-        System.out.println("tokenSignKey = " + tokenSignKey);
-        String token = Jwts.builder()
-                .setSubject("YYGH-USER")
-                .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration*1000*60)) //单位分钟
-                .claim("openId", openId)
-                .signWith(SignatureAlgorithm.HS512, tokenSignKey)
-                .compressWith(CompressionCodecs.GZIP)
-                .compact();
-        return token;
-    }
+//    public  String createToken(String openId) {
+//        System.out.println("tokenExpiration = " + tokenExpiration);
+//        System.out.println("tokenSignKey = " + tokenSignKey);
+//        String token = Jwts.builder()
+//                .setSubject("YYGH-USER")
+//                .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration*1000*60)) //单位分钟
+//                .claim("openId", openId)
+//                .signWith(SignatureAlgorithm.HS512, tokenSignKey)
+//                .compressWith(CompressionCodecs.GZIP)
+//                .compact();
+//        return token;
+//    }
 
     //从token字符串获取userid
     public  Long getUserId(String token) {

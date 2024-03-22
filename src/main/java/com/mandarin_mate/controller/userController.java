@@ -125,7 +125,7 @@ public class userController {
 
         //为微信用户生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
-        String token = jwtHelper.createToken(user.getOpenId());
+        String token = jwtHelper.createToken(user.getUserId());
         UserLoginVO userLoginVO = UserLoginVO.builder()
                 .openid(user.getOpenId())
                 .token(token)
