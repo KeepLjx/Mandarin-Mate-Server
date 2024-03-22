@@ -13,7 +13,9 @@ public enum ResultCodeEnum {
     REGISTER_ERROR(506,"服务器注册失败"),
     USER_NULL(2,"用户为空，请注册"),
     USER_LOGIN_NULL(3,"传入参数为空,请输入"),
-    USERNAME_USED(505,"userNameUsed");
+    USERNAME_USED(505,"userNameUsed"),
+    EMail_ERROR(4,"邮件发送失败，请重新尝试"),
+    REGISTER_CODE_EMail_ERROR(5, "验证码输入错误");
 
     private Integer code;
     private String message;

@@ -32,7 +32,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginProtectedInterceptor)
                 .addPathPatterns("/user/**","/book/**")
-                .excludePathPatterns("/user/login","/user/register","/book","/user/weChatLogin");
+                .excludePathPatterns("/user/login","/user/register","/book","/user/weChatLogin","/user/userMail");
     }
 
     /**
