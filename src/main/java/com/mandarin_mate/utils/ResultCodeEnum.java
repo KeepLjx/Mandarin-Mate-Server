@@ -15,6 +15,7 @@ public enum ResultCodeEnum {
     USER_LOGIN_NULL(3,"传入参数为空,请输入"),
     USERNAME_USED(505,"userNameUsed"),
     EMail_ERROR(4,"邮件发送失败，请重新尝试"),
+    Email_exist(6,"该邮箱已注册过，请勿重复注册"),
     REGISTER_CODE_EMail_ERROR(5, "验证码输入错误");
 
     private Integer code;

@@ -1,5 +1,8 @@
 package com.mandarin_mate.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mandarin_mate.mapper.UserMapper;
+import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.service.MailService;
 import com.mandarin_mate.utils.Constans;
 import com.mandarin_mate.utils.Result;
@@ -29,36 +32,47 @@ public class MailServiceImpl implements MailService {
     private JavaMailSenderImpl javaMailSender;
 
     @Resource
+    private UserMapper userMapper;
+    @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Value("${spring.mail.username}")
     private String sendMailer;
     @Override
     public Result sendTextMailMessage(String to, String subject, String text) {
-        String msg = Constans.VerificationInfo.setText(text);
-        String msgTo = "<"+to+">";
-        try {
-            //true 代表支持复杂的类型
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(),true);
-            //邮件发信人
-            mimeMessageHelper.setFrom(sendMailer);
-            //邮件收信人  1个
-            mimeMessageHelper.setTo(msgTo);
-            //邮件主题
-            mimeMessageHelper.setSubject(subject);
-            //邮件内容
-            mimeMessageHelper.setText(msg);
-            //邮件发送时间
-            mimeMessageHelper.setSentDate(new Date());
+        // 判断用户是否存在
+        LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userLambdaQueryWrapper.eq(User::getUserMail,to);
+        User user = userMapper.selectOne(userLambdaQueryWrapper);
+        // 不存在，继续注册
+        if(user == null){
+            String msg = Constans.VerificationInfo.setText(text);
+            String msgTo = "<"+to+">";
+            try {
+                //true 代表支持复杂的类型
+                MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(),true);
+                //邮件发信人
+                mimeMessageHelper.setFrom(sendMailer);
+                //邮件收信人  1个
+                mimeMessageHelper.setTo(msgTo);
+                //邮件主题
+                mimeMessageHelper.setSubject(subject);
+                //邮件内容
+                mimeMessageHelper.setText(msg);
+                //邮件发送时间
+                mimeMessageHelper.setSentDate(new Date());
 
-            //发送邮件
-            javaMailSender.send(mimeMessageHelper.getMimeMessage());
-            //验证码存入redis
-            stringRedisTemplate.opsForValue().set(Constans.RedisConstants.LOGIN_CODE_KEY+to,text, Constans.RedisConstants.LOGIN_CODE_TTL , TimeUnit.MINUTES);
-            log.info("发送邮件成功："+sendMailer+"->"+to);
-            return Result.ok("发送邮件成功");
-        } catch (MessagingException e) {
-            log.info("发送邮件失败："+e.getMessage());
-            return Result.build(null, ResultCodeEnum.EMail_ERROR);
+                //发送邮件
+                javaMailSender.send(mimeMessageHelper.getMimeMessage());
+                //验证码存入redis
+                stringRedisTemplate.opsForValue().set(Constans.RedisConstants.LOGIN_CODE_KEY+to,text, Constans.RedisConstants.LOGIN_CODE_TTL , TimeUnit.MINUTES);
+                log.info("发送邮件成功："+sendMailer+"->"+to);
+                return Result.ok("发送邮件成功");
+            } catch (MessagingException e) {
+                log.info("发送邮件失败："+e.getMessage());
+                return Result.build(null, ResultCodeEnum.EMail_ERROR);
+            }
         }
+        return Result.build(null,ResultCodeEnum.Email_exist);
+
     }
 }
