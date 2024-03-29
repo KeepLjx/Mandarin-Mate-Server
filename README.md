@@ -1,22 +1,30 @@
 # **项目简介**
-&emsp;&emsp;本项目是一款专注于汉语自主学习的软件,以纠正用户发音为核心，通过深度卷积神经网络、语音识别等技术，为用户提供个性化学习建议和丰富的学习资源，实现了一个便捷高效的多功能语言学习平台。  
-&emsp;&emsp;语伴使用Spring Boot和uniapp进行开发，并利用vue3技术与vite项目包配置工具对项目进行业务开发以及项目管理。
+&emsp;&emsp;本项目是一个基于 Spring Boot 框架开发的后端服务
+
 # **项目开发**
-## **开发环境**
-## **目录结构和重要文件说明**
-
-* src/main/java/com/mandarin_mate/controller: 包含用户控制器代码。
-* src/main/resources: 存放配置文件和静态资源。  
-* MandarinMateServerApplication.java: 项目启动类。  
-
-## **登陆注册**
-### **技术栈**
+## **技术栈**
 * Java
 * Spring
 * Framework
 * Hutool
-* JWT
-* Spring Boot
+* Fastjson
+* JWT：使用 JSON Web Token 进行用户身份验证和安全控制。
+* MySQL：数据存储
+* Lombok：简化 Java 代码，通过注解减少样板代码的编写
+* Spring Boot：使用 Spring Boot 构建后端服务，简化了项目配置和开发。
+* Redis: 用于在项目中处理缓存和存储数据。
+* Aliyun OSS SDK: 阿里云 OSS 对象存储服务的 Java SDK。
+
+## **目录结构和重要文件说明**
+
+* src/main/java/com/mandarin_mate/controller: 包含用户控制器代码。
+* src/main/resources: 存放配置文件和静态资源。  
+* MandarinMateServerApplication.java: 项目启动类。
+* /pom.xml：Maven 项目配置文件，定义了项目的依赖和构建配置。
+
+## **登陆注册相关接口实现**
+
+
 ### **功能实现**
 1. 用户注册：通过 @Autowired 和 @Value 注解注入依赖项和配置信息。 
 
