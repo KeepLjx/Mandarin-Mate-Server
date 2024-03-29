@@ -26,15 +26,15 @@
 
 
 ### **功能实现**
-1. 用户注册：通过 @Autowired 和 @Value 注解注入依赖项和配置信息。 
+1. 用户注册(register)：通过 @Autowired 和 @Value 注解注入依赖项和配置信息。 
 
-2. 用户登录：使用了Spring的注解 @GetMapping、@PostMapping 和 @RequestHeader 进行处理HTTP请求  
+2. 用户登录(login)：使用了Spring的注解 @GetMapping、@PostMapping 和 @RequestHeader 进行处理HTTP请求  
 
-3. 微信登录：生成JWT令牌用于用户标识和安全校验  
+3. 微信登录(weChatLogin)：生成JWT令牌用于用户标识和安全校验  
 
-4. 获取用户信息：通过调用 userService 和 mailService 这两个服务的方法实现业务逻辑。  
+4. 获取用户信息(getUserInfo)：通过调用 userService 和 mailService 这两个服务的方法实现业务逻辑。  
 
-5. 用户头像自定义上传：用户头像上传时，逻辑包括文件大小限制、格式校验、文件保存等。   
+5. 用户头像自定义上传(upload)：用户头像上传时，逻辑包括文件大小限制、格式校验、文件保存等。   
 
-6. 用户邮箱验证码发送：使用了 @RestController 和 @RequestMapping 注解标识RESTful API接口。
+6. 用户邮箱验证码发送(userMail)：使用了 @RestController 和 @RequestMapping 注解标识RESTful API接口。
 # **项目部署**
