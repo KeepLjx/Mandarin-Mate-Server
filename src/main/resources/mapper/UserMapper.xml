@@ -25,4 +25,5 @@
         select open_id
         from user
     </select>
+    <select id="selectByOpenid" resultType="com.mandarin_mate.pojo.User"></select>
 </mapper>

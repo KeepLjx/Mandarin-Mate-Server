@@ -19,8 +19,10 @@ public interface UserMapper extends BaseMapper<User> {
      * 获取用户微信登录的openid
      * @return
      */
-    @Select("select * from user where open_id = #{openid}")
-    User getByOpeenid(String openid);
+    User selectByOpenid(String openid);
+
+
+
 }
 
 

@@ -117,6 +117,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 //        userMapper.update(user, userLambdaQueryWrapper);
     }
 
+    /**
+     * 获取用户信息业务实现
+     * @param token
+     * @return
+     */
     @Override
     public Result getUserInfo(String token) {
         //jwt解析id
@@ -145,7 +150,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         //判断当前用户是否为新用户
-        User user = userMapper.getByOpeenid(openid);
+        User user = userMapper.selectByOpenid(openid);
 
         //如果是新用户，自动完成注册
 

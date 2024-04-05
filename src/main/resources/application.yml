@@ -10,7 +10,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     #配置连接数据库的各个信息
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://114.55.232.24:3306/mandarin_mate?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://39.101.140.144:3306/mandarin_mate?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
     username: liujiaxin
     password: 200212
 
