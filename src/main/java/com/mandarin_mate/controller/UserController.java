@@ -2,6 +2,7 @@ package com.mandarin_mate.controller;
 
 import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
+import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
 import com.mandarin_mate.pojo.vo.UserLoginVO;
 import com.mandarin_mate.service.impl.UserServiceImpl;
 import com.mandarin_mate.utils.JwtHelper;
@@ -30,7 +31,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-public class userController {
+public class UserController {
     @Autowired
     private UserServiceImpl userService;
     @Value("${prop.upload-folder}")
@@ -46,7 +47,7 @@ public class userController {
      * @return
      */
     @PostMapping("register")
-    public Result register(@RequestBody User user){
+    public Result register(@RequestBody UserRegisterFormDTO user){
         Result result = userService.register(user);
         return result ;
     }
