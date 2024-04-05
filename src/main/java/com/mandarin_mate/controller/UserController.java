@@ -1,13 +1,17 @@
 package com.mandarin_mate.controller;
 
+import cn.hutool.core.util.RandomUtil;
 import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
 import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
 import com.mandarin_mate.pojo.vo.UserLoginVO;
+import com.mandarin_mate.service.impl.MailServiceImpl;
 import com.mandarin_mate.service.impl.UserServiceImpl;
+import com.mandarin_mate.utils.Constans;
 import com.mandarin_mate.utils.JwtHelper;
 import com.mandarin_mate.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +41,25 @@ public class UserController {
     @Value("${prop.upload-folder}")
     private String UPLOAD_FOLDER;
 
+    @Resource
+    private MailServiceImpl mailService;
     @Autowired
     private JwtHelper jwtHelper;
 
 
+    /**
+     * 用户邮箱验证码
+     * @param userMail 用户邮箱
+     * @return
+     */
+    @GetMapping("userMail")
+    public Result userMail(@RequestParam String userMail ){
+        //生成验证码
+        String VerificationCode = RandomUtil.randomNumbers(6);
+        //发送邮件
+        Result result = mailService.sendTextMailMessage(userMail, Constans.Verification.TOPIC,VerificationCode);
+        return result;
+    }
     /**
      * 用户注册
      * @param user
