@@ -3,6 +3,7 @@ package com.mandarin_mate.service;
 import com.mandarin_mate.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
+import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
 import com.mandarin_mate.utils.Result;
 
 /**
@@ -17,7 +18,7 @@ public interface UserService extends IService<User> {
      * @param user
      * @return
      */
-    Result register(User user);
+    Result register(UserRegisterFormDTO user);
 
     /**
      * 用户登录业务

@@ -9,14 +9,14 @@ import com.mandarin_mate.constant.MessageConstant;
 import com.mandarin_mate.exception.LoginFailedException;
 import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
+import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
 import com.mandarin_mate.properties.WeChatProperties;
 import com.mandarin_mate.service.UserService;
 import com.mandarin_mate.mapper.UserMapper;
-import com.mandarin_mate.utils.HttpClientUtil;
-import com.mandarin_mate.utils.JwtHelper;
-import com.mandarin_mate.utils.Result;
-import com.mandarin_mate.utils.ResultCodeEnum;
+import com.mandarin_mate.utils.*;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,20 +39,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Autowired
     private WeChatProperties weChatProperties;
 
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
     //微信服务接口地址
     public static final String WX_LOGIN = "https://api.weixin.qq.com/sns/jscode2session";
 
     /**
      * 用户注册业务实现
-     * @param user
+     * @param registerUser
      * @return
      */
     @Override
-    public Result register(User user) {
-        user.setAvatarPath("kkkkk");
-        user.setIsvip(0);
+    public Result register(UserRegisterFormDTO registerUser) {
+        //验证码是否正确
+        String code = registerUser.getRegisterCode();
+        String redisCode  = stringRedisTemplate.opsForValue().get(Constans.RedisConstants.LOGIN_CODE_KEY + registerUser.getUserMail());
+        if (redisCode == null || !redisCode.contains(code)) {
+            return Result.build(null, ResultCodeEnum.REGISTER_CODE_EMail_ERROR);
+        }
+        User user = new User();
+        user.setNickName(registerUser.getNickName());
+        user.setPassword(registerUser.getPassword());
+        user.setUserMail(registerUser.getUserMail());
+        user.setAvatarPath("defult");  // 设置默认头像
+        user.setIsvip(0);  // 默认非vip用户
         int insert = userMapper.insert(user);
-        if(insert !=0){
+        if( insert != 0 ){
             return Result.ok(null);
         }
         return Result.build(null, ResultCodeEnum.REGISTER_ERROR);

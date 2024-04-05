@@ -3,7 +3,7 @@ package com.mandarin_mate.controller;
 import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
 import com.mandarin_mate.pojo.vo.UserLoginVO;
-import com.mandarin_mate.service.UserService;
+import com.mandarin_mate.service.impl.UserServiceImpl;
 import com.mandarin_mate.utils.JwtHelper;
 import com.mandarin_mate.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,9 +30,9 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class userController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
     @Value("${prop.upload-folder}")
     private String UPLOAD_FOLDER;
 
@@ -132,22 +132,5 @@ public class UserController {
                 .createTime(user.getCreateTime())
                 .build();
         return Result.ok(userLoginVO);
-    }
-
-    @PostMapping("/practiceVoice")
-    public Result practiceVoice(@RequestBody MultipartFile file, @RequestHeader String token){
-        // 1.获取用户信息
-        Result userInfo = userService.getUserInfo(token);
-
-        // 2.调用python接口获取打分结果
-
-        // 3.将文件上传到redis中并设置过期时间为5分钟
-
-        // 4.将打分结果保存到数据库
-
-        // 5.返回打分结果
-
-        System.out.println(file);
-        return Result.ok("你的得分是80分");
     }
 }
