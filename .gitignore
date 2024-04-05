@@ -29,7 +29,8 @@ application-dev.yml
 /.nb-gradle/
 build/
 !**/src/main/**/build/
-/src/test/
+/src/test/java
+**/test
 
 ### VS Code ###
 .vscode/

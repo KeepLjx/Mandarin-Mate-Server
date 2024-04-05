@@ -134,4 +134,21 @@ public class UserController {
                 .build();
         return Result.ok(userLoginVO);
     }
+
+    @PostMapping("/practiceVoice")
+    public Result practiceVoice(@RequestBody MultipartFile file, @RequestHeader String token){
+        // 1.获取用户信息
+        Result userInfo = userService.getUserInfo(token);
+
+        // 2.调用python接口获取打分结果
+
+        // 3.将文件上传到redis中并设置过期时间为5分钟
+
+        // 4.将打分结果保存到数据库
+
+        // 5.返回打分结果
+
+        System.out.println(file);
+        return Result.ok("你的得分是80分");
+    }
 }
