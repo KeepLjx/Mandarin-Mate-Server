@@ -4,7 +4,6 @@ import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
 import com.mandarin_mate.pojo.vo.UserLoginVO;
 import com.mandarin_mate.service.UserService;
-import com.mandarin_mate.service.impl.UserServiceImpl;
 import com.mandarin_mate.utils.JwtHelper;
 import com.mandarin_mate.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +30,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-public class userController {
+public class UserController {
     @Autowired
     private UserService userService;
     @Value("${prop.upload-folder}")

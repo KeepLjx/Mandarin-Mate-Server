@@ -25,7 +25,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/common")
 @ApiResponse(description = "通用接口")
-public class commonController {
+public class CommonController {
 
     @Autowired
     private AliOssUtil aliOssUtil;
@@ -48,11 +48,12 @@ public class commonController {
         log.info("文件上传：{}",file);
         try {
             //原始文件名
-            //String originalFilename = file.getOriginalFilename();
+            String originalFilename = file.getOriginalFilename();
             //截取原始文件名的后缀
             //String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String objectName = path + "/" + originalFilename;
             //文件的请求路径
-            String filePath = aliOssUtil.upload(file.getBytes(),path);
+            String filePath = aliOssUtil.upload(file.getBytes(),objectName);
             return Result.ok(filePath);
         } catch (IOException e) {
             log.error("文件上传失败：{}",e);
