@@ -40,6 +40,8 @@ public class Result<T> {
         Result<T> result = build(data);
         return build(data, ResultCodeEnum.SUCCESS);
     }
+
+
     public Result<T> message(String msg){
         this.setMessage(msg);
         return this;
