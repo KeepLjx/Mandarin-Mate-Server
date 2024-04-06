@@ -115,15 +115,53 @@
 
 
 ### **功能实现**
-1. 用户注册(register)：通过 @Autowired 和 @Value 注解注入依赖项和配置信息。 
+1. 用户注册(register)：通过 @Autowired 和 @Value 注解注入依赖项和配置信息。
+　　- 注解：@PostMapping("register") 表示该方法处理POST请求，请求路径为 "/register"。
+    - 参数：@RequestBody UserRegisterFormDTO user 是一个用于接收用户注册信息的数据传输对象。
+    - 返回：方法返回一个Result对象，其中包含了注册结果。
+    - 实现：调用 userService.register(user) 方法进行用户注册操作，并将结果封装为Result对象后返回。
 
-2. 用户登录(login)：使用了Spring的注解 @GetMapping、@PostMapping 和 @RequestHeader 进行处理HTTP请求  
+2.  用户登录(login)：使用了Spring的注解 @GetMapping、@PostMapping 和 @RequestHeader 进行处理HTTP请求
 
-3. 微信登录(weChatLogin)：生成JWT令牌用于用户标识和安全校验  
+    - 注解：@PostMapping("login") 表示该方法处理POST请求，请求路径为 "/login"。
+    - 参数：@RequestBody UserLoginDTO userLoginDTO 是用于接收用户登录信息的数据传输对象。
+    - 返回：方法返回一个Result对象，其中包含了登录结果。
+    - 实现：调用 userService.login(userLoginDTO) 方法进行用户登录操作，并将结果封装为Result对象后返回。
 
-4. 获取用户信息(getUserInfo)：通过调用 userService 和 mailService 这两个服务的方法实现业务逻辑。  
+3. 微信登录(weChatLogin)：生成JWT令牌用于用户标识和安全校验
+    - 注解：@PostMapping("/weChatLogin") 表示该方法处理POST请求，请求路径为 "/weChatLogin"。
+    - 参数：使用了 @Operation(tags = "微信登录") 注解，用于标识这是一个微信登录相关的操作。
+    　　　　 @RequestBody UserLoginDTO userLoginDTO 是用于接收用户登录信息的数据传输对象。
+    - 返回：方法返回一个Result对象，其中包含了登录结果。
+    - 实现： 记录日志信息，输出微信登录时用户的代码(code)。
+            调用 userService.wxLogin(userLoginDTO) 方法进行微信登录操作，获取对应的用户信息。
+            生成 JWT 令牌并将用户ID作为声明（claims）存储在令牌中。
+            构建 UserLoginVO 对象，包含用户的 OpenID、令牌、创建时间等信息。
+            最终以 Result.ok(userLoginVO) 的形式返回登录成功的结果。
 
-5. 用户头像自定义上传(upload)：用户头像上传时，逻辑包括文件大小限制、格式校验、文件保存等。   
+4. 获取用户信息(getUserInfo)：通过调用 userService 和 mailService 这两个服务的方法实现业务逻辑。
 
-6. 用户邮箱验证码发送(userMail)：使用了 @RestController 和 @RequestMapping 注解标识RESTful API接口。
+    - 注解：@GetMapping  使用 HTTP GET 请求来调用该方法。
+    - 参数：public Result getUserInfo(@RequestHeader String token) 是用于获取用户信息，它接收一个类型为 `String` 的请求头参数名为 `token`。
+    - 返回：方法返回一个Result对象，其中包含了包含对用户信息的操作结果。
+    - 实现：调用 userService.getUserInfo(token) 方法获取用户信息，并将结果封装为Result对象后返回。
+
+5. 用户头像自定义上传(upload)：用户头像上传时，逻辑包括文件大小限制、格式校验、文件保存等。
+  　- 注解：@PostMapping("/uploadAvatar") 表示该方法处理POST请求，请求路径为 "/uploadAvatar"。
+    - 参数：@RequestParam("file") MultipartFile file 表示接收用户上传的头像文件。
+　　　　　　@RequestHeader("Authorization") String token 表示请求头中的授权令牌。
+    - 返回：方法返回一个 Result 对象，其中包含了头像上传结果。
+    - 实现：调用 userService.uploadAvatar(file, token) 方法处理用户上传头像操作，并将结果封装为 Result 对象后返回。
+
+6. 邮箱验证码发送(userMail)：使用了 @RestController 和 @RequestMapping 注解标识RESTful API接口。
+   userMail() 方法：
+    **目的**：生成验证码并向提供的用户邮箱发送电子邮件。
+    **端点**：通过对 /user/userMail 发出 GET 请求来访问。
+    **参数**：作为请求参数接受一个 userMail 字符串。
+    **功能**：
+      * 使用 RandomUtil.randomNumbers(6) 生成随机的6位数验证码。
+      * 使用 mailService.sendTextMailMessage() 向提供的 userMail 地址发送包含验证码的文本邮件消息。
+      * 返回一个 Result 对象作为响应。
+   
+   
 # **项目部署**
