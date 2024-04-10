@@ -179,11 +179,19 @@
 1. 打开IDEA开发工具，点击Maven，先运行clean清理编译好的可执行文件。
 2. 运行package对项目进行重新编译和打包。
 3. 复制打包好的.jar文件（jar包）。
+<div align=center>
+<img src="1.png" width="60%">
+</div>
+
 
 ## 二：将jar包上传至Linux服务器
 
 1. 使用XFTP等工具连接到Linux服务器。
 2. 将复制好的jar包保存到`/opt/java/`目录下。
+<div align=center>
+<img src="2.png" width="60%">
+</div>
+
 
 ## 三：运行项目
 
@@ -193,5 +201,8 @@
    ```
    java -jar /opt/java/Mandarin_Mate-0.0.1-SNAPSHOT.jar &
    ```
+<div align=center>
+<img src="3.png" width="60%">
+</div>
 
-项目部署完成
+**项目部署完成**
