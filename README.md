@@ -1,3 +1,12 @@
+# **语伴**
+<div align=center>
+<img src="image/logoyuan.png" width="30%">
+</div>
+
+<p align="center">  
+Mandarin-Mate 
+</p>  
+
 # **项目简介**
 &emsp;&emsp;本项目是一款专注于汉语自主学习的软件,以纠正用户发音为核心，通过深度卷积神经网络、语音识别等技术，为用户提供个性化学习建议和丰富的学习资源，实现了一个便捷高效的多功能语言学习平台。项目采用前后端分离开发，后端基于 Spring Boot 框架进行开发。  
 &emsp;&emsp;[前端开发]: (https://github.com/KeepLjx/Mandarin-Mate)
