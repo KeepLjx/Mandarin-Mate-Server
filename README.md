@@ -4,7 +4,9 @@
 
 # **算法介绍**
 项目的语音识别系统的声学模型采用了深度全卷积神经网络，将语音信号转换成语谱图，输入模型中进行训练，在模型的输出端，通过CTC解码，将声音波形信号直接转录为中文普通话拼音序列，在语言模型上，通过最大熵隐含马尔可夫模型，将拼音序列转换为中文文本。
-
+<div align=center>
+<img src="image/chat.png" width="60%">
+</div>
 
 # 数据库设计
 
@@ -189,7 +191,7 @@
 1. 使用XFTP等工具连接到Linux服务器。
 2. 将复制好的jar包保存到`/opt/java/`目录下。
 <div align=center>
-<img src="2.png" width="60%">
+<img src="image/2.png" width="60%">
 </div>
 
 
@@ -202,7 +204,7 @@
    java -jar /opt/java/Mandarin_Mate-0.0.1-SNAPSHOT.jar &
    ```
 <div align=center>
-<img src="3.png" width="60%">
+<img src="image/3.png" width="60%">
 </div>
 
 **项目部署完成**
