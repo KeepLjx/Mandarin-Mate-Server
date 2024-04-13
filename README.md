@@ -17,7 +17,7 @@
 * **收藏表**：包含用户ID以及用户收藏的单词ID。
 ## **数据库关系图**
 <div align=center>
-<img src="er.png" width="60%">
+<img src="image/er.png" width="60%">
 </div>
 
 ## **数据库表结构**
@@ -180,7 +180,7 @@
 2. 运行package对项目进行重新编译和打包。
 3. 复制打包好的.jar文件（jar包）。
 <div align=center>
-<img src="1.png" width="60%">
+<img src="image/1.png" width="60%">
 </div>
 
 
