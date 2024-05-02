@@ -15,4 +15,9 @@
         user_id,book_id,is_delete,
         completed
     </sql>
+    <select id="selectScheduleByUserIdAndBookId" resultType="com.mandarin_mate.pojo.Schedule">
+        select user_id, book_id, is_delete, completed
+        from schedule
+        where user_id = #{userId} and book_id = #{bookId};
+    </select>
 </mapper>

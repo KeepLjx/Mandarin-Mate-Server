@@ -8,7 +8,6 @@
             <id property="wordsId" column="words_id" jdbcType="BIGINT"/>
             <result property="bookId" column="book_id" jdbcType="BIGINT"/>
             <result property="wordsSpell" column="words_spell" jdbcType="VARCHAR"/>
-            <result property="wordsTone" column="words_tone" jdbcType="VARCHAR"/>
             <result property="example" column="example" jdbcType="VARCHAR"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="typeTag" column="type_tag" jdbcType="VARCHAR"/>
@@ -16,7 +15,13 @@
 
     <sql id="Base_Column_List">
         words_id,book_id,words_spell,
-        words_tone,example,content,
-        type_tag
+        example,content,type_tag
     </sql>
+    <select id="selectAllByWordsId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from words
+        where
+        words_id = #{wordsId,jdbcType=NUMERIC}
+    </select>
 </mapper>

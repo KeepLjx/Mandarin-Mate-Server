@@ -59,7 +59,7 @@ public class AliOssUtil {
                 .append(bucketName)
                 .append(".")
                 .append(endpoint)
-                .append("/s")
+                .append("/")
                 .append(objectName);
 
         log.info("文件上传到:{}", stringBuilder.toString());

@@ -57,8 +57,9 @@ public class BookController {
      * @return
      */
     @GetMapping("getSchedule")
-    public Result getSchedule(@RequestHeader String token){
-        Result result = scheduleService.getSchedule(token);
+    public Result getSchedule(@RequestParam Long bookId ,
+                              @RequestHeader String token){
+        Result result = scheduleService.getSchedule(bookId, token);
         return result;
     }
 

@@ -2,9 +2,13 @@ package com.mandarin_mate.controller;
 
 
 import cn.hutool.core.util.RandomUtil;
+import com.alibaba.fastjson.JSONObject;
+import com.mandarin_mate.mapper.WordsInfoMapper;
 import com.mandarin_mate.pojo.User;
+import com.mandarin_mate.pojo.WordsInfo;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
 import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
+import com.mandarin_mate.pojo.dto.WordsInfoDTO;
 import com.mandarin_mate.pojo.vo.UserLoginVO;
 import com.mandarin_mate.service.impl.MailServiceImpl;
 import com.mandarin_mate.service.impl.UserServiceImpl;
@@ -22,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -46,57 +51,65 @@ public class UserController {
     private MailServiceImpl mailService;
     @Autowired
     private JwtHelper jwtHelper;
+    @Resource
+    private WordsInfoMapper wordsInfoMapper;
 
 
     /**
      * 用户邮箱验证码
+     *
      * @param userMail 用户邮箱
      * @return
      */
     @GetMapping("userMail")
-    public Result userMail(@RequestParam String userMail ){
+    public Result userMail(@RequestParam String userMail) {
         //生成验证码
         String VerificationCode = RandomUtil.randomNumbers(6);
         //发送邮件
-        Result result = mailService.sendTextMailMessage(userMail, Constans.Verification.TOPIC,VerificationCode);
+        Result result = mailService.sendTextMailMessage(userMail, Constans.Verification.TOPIC, VerificationCode);
         return result;
     }
 
     /**
      * 用户注册
+     *
      * @param user
      * @return
      */
     @PostMapping("register")
-    public Result register(@RequestBody UserRegisterFormDTO user){
+    public Result register(@RequestBody UserRegisterFormDTO user) {
         Result result = userService.register(user);
-        return result ;
+        return result;
     }
 
 
     /**
      * 用户登录
+     *
      * @param userLoginDTO
      * @return
      */
     @PostMapping("login")
-    public Result login(@RequestBody UserLoginDTO userLoginDTO){
-        Result result  = userService.login(userLoginDTO);
+    public Result login(@RequestBody UserLoginDTO userLoginDTO) {
+        Result result = userService.login(userLoginDTO);
         return result;
     }
 
     /**
      * 获取用户信息
+     *
      * @param token
      * @return
      */
     @GetMapping
-    public Result getUserInfo(@RequestHeader String token){
+    public Result getUserInfo(@RequestHeader String token) {
         Result result = userService.getUserInfo(token);
         return result;
     }
+
     /**
      * 用户头像自定义上传
+     *
      * @param file
      * @param request
      * @return
@@ -104,17 +117,17 @@ public class UserController {
     @PostMapping("/upload")
     //todo 加上api注解
     @Operation(tags = "什么功能")
-    public Result upload(@RequestBody MultipartFile file, HttpServletRequest request,@RequestHeader String token) {
+    public Result upload(@RequestBody MultipartFile file, HttpServletRequest request, @RequestHeader String token) {
         if (file == null) {
-            return Result.build(null,0,"头像上传文件为空");
+            return Result.build(null, 0, "头像上传文件为空");
         }
         if (file.getSize() > 1024 * 1024 * 10) {
-            return Result.build(null,0, "文件大小不能大于10M");
+            return Result.build(null, 0, "文件大小不能大于10M");
         }
         //获取文件后缀
         String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, file.getOriginalFilename().length());
         if (!"jpg,jpeg,gif,png".toUpperCase().contains(suffix.toUpperCase())) {
-            return Result.build(null,0, "请选择jpg,jpeg,gif,png格式的图片");
+            return Result.build(null, 0, "请选择jpg,jpeg,gif,png格式的图片");
         }
         String savePath = UPLOAD_FOLDER;
         File savePathFile = new File(savePath);
@@ -123,17 +136,17 @@ public class UserController {
             savePathFile.mkdir();
         }
         //通过UUID生成唯一文件名
-        String filename = UUID.randomUUID().toString().replaceAll("-","") + "." + suffix;
+        String filename = UUID.randomUUID().toString().replaceAll("-", "") + "." + suffix;
         try {
             //将文件保存指定目录
             file.transferTo(new File(savePath + filename));
         } catch (Exception e) {
             e.printStackTrace();
-            return Result.build(null,0, "保存文件异常");
+            return Result.build(null, 0, "保存文件异常");
         }
-        userService.saveUserImg(filename,token);
+        userService.saveUserImg(filename, token);
         HashMap map = new HashMap();
-        map.put("fileName",filename);
+        map.put("fileName", filename);
         //返回文件名称
         return Result.ok(map);
     }
@@ -155,20 +168,13 @@ public class UserController {
                 .build();
         return Result.ok(userLoginVO);
     }
-        @PostMapping("/practiceVoice")
-    public Result practiceVoice(@RequestBody MultipartFile file, @RequestHeader String token){
-        // 1.获取用户信息
-        Result userInfo = userService.getUserInfo(token);
 
-        // 2.调用python接口获取打分结果
-
-        // 3.将文件上传到redis中并设置过期时间为5分钟
-
-        // 4.将打分结果保存到数据库
-
-        // 5.返回打分结果
-
-        System.out.println(file);
-        return Result.ok("你的得分是80分");
+    @PostMapping("/getWordsInfo")
+    public Result getWordsInfo(@RequestBody WordsInfoDTO wordsInfoDTO, @RequestHeader String token) {
+        List<WordsInfo> wordsInfos = wordsInfoMapper.selectAllByWordsId(wordsInfoDTO.getWordsId());
+        if (wordsInfos == null && wordsInfos.isEmpty()) {
+            return Result.build(null, 0, "不存在该单词");
+        }
+        return Result.ok(wordsInfos.get(0).getWordsSpell());
     }
 }

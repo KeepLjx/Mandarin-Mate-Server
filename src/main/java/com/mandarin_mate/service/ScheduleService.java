@@ -24,7 +24,7 @@ public interface ScheduleService extends IService<Schedule> {
      * @param token
      * @return
      */
-    Result getSchedule(String token);
+    Result getSchedule(Long bookeId, String token);
 
 
     /**

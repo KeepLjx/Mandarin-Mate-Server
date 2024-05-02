@@ -1,8 +1,11 @@
 package com.mandarin_mate.mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.mandarin_mate.pojo.WordsInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
 * @author lenovo
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface WordsInfoMapper extends BaseMapper<WordsInfo> {
 
 
+    List<WordsInfo> selectAllByWordsId(@Param("wordsId") Long wordsId);
 }
 
 

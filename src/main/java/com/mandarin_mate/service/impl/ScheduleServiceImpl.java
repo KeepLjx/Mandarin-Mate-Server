@@ -3,6 +3,7 @@ package com.mandarin_mate.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mandarin_mate.constant.MessageConstant;
 import com.mandarin_mate.pojo.Schedule;
 import com.mandarin_mate.service.ScheduleService;
 import com.mandarin_mate.mapper.ScheduleMapper;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
 * @author lenovo
@@ -35,6 +37,10 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
     @Override
     public Result buildSchedule(Long bookId, String token) {
         Long userId = jwtHelper.getUserId(token);
+        List<Schedule> schedules = scheduleMapper.selectScheduleByUserIdAndBookId(bookId, userId);
+        if (!(schedules == null || schedules.size() == 0)) {
+            return Result.ok(MessageConstant.PROGRESS_CREATED);
+        }
         Schedule schedule = new Schedule();
         schedule.setBookId(bookId);
         schedule.setUserId(userId);
@@ -53,10 +59,11 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
      * @return
      */
     @Override
-    public Result getSchedule(String token) {
+    public Result getSchedule(Long bookId, String token) {
         Long userId = jwtHelper.getUserId(token);
         LambdaQueryWrapper<Schedule> scheduleLambdaQueryWrapper = new LambdaQueryWrapper<>();
         scheduleLambdaQueryWrapper.eq(Schedule::getUserId,userId);
+        scheduleLambdaQueryWrapper.eq(Schedule::getBookId,bookId);
         scheduleLambdaQueryWrapper.eq(Schedule::getIsDelete,0L);
         Schedule schedule = scheduleMapper.selectOne(scheduleLambdaQueryWrapper);
         HashMap<Object, Object> map = new HashMap<>();

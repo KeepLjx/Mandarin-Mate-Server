@@ -4,6 +4,8 @@ import com.mandarin_mate.pojo.Schedule;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
 * @author lenovo
 * @description 针对表【schedule(用户进度表)】的数据库操作Mapper
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ScheduleMapper extends BaseMapper<Schedule> {
 
+
+    List<Schedule> selectScheduleByUserIdAndBookId(Long bookId, Long userId);
 }
 
 

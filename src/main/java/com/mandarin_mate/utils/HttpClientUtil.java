@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * Http工具类
  */
@@ -100,12 +101,9 @@ public class HttpClientUtil {
                 UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList);
                 httpPost.setEntity(entity);
             }
-
             httpPost.setConfig(builderRequestConfig());
-
             // 执行http请求
             response = httpClient.execute(httpPost);
-
             resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
         } catch (Exception e) {
             throw e;
@@ -169,6 +167,7 @@ public class HttpClientUtil {
 
         return resultString;
     }
+
     private static RequestConfig builderRequestConfig() {
         return RequestConfig.custom()
                 .setConnectTimeout(TIMEOUT_MSEC)
