@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mandarin_mate.mapper.WordsInfoMapper;
 import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.pojo.WordsInfo;
+import com.mandarin_mate.pojo.dto.UserDTO;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
 import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
 import com.mandarin_mate.pojo.dto.WordsInfoDTO;
@@ -108,6 +109,18 @@ public class UserController {
     }
 
     /**
+     * 更新用户信息
+     * @param token
+     * @param userDTO
+     * @return
+     */
+    @PostMapping("/changeInfo")
+    public Result updateUserInfo(@RequestHeader String token, @RequestBody UserDTO userDTO) {
+        userService.updateInfo(userDTO);
+        return Result.ok("Update completed.");
+    }
+
+    /**
      * 用户头像自定义上传
      *
      * @param file
@@ -173,7 +186,7 @@ public class UserController {
     public Result getWordsInfo(@RequestBody WordsInfoDTO wordsInfoDTO, @RequestHeader String token) {
         List<WordsInfo> wordsInfos = wordsInfoMapper.selectAllByWordsId(wordsInfoDTO.getWordsId());
         if (wordsInfos == null && wordsInfos.isEmpty()) {
-            return Result.build(null, 0, "不存在该单词");
+            return Result.build(null, 0, "The word does not exist.");
         }
         return Result.ok(wordsInfos.get(0).getWordsSpell());
     }

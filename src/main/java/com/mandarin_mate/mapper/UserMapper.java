@@ -2,8 +2,7 @@ package com.mandarin_mate.mapper;
 
 import com.mandarin_mate.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import com.mandarin_mate.pojo.dto.UserDTO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,10 +18,13 @@ public interface UserMapper extends BaseMapper<User> {
      * 获取用户微信登录的openid
      * @return
      */
-    User selectByOpenid(String openid);
+    User selectByOpenId(String openid);
 
 
-
+    /**
+     * 更新用户的bookId
+     */
+    void updateInfo(UserDTO userDTO);
 }
 
 

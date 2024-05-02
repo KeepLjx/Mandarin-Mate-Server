@@ -9,11 +9,14 @@
             <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
             <result property="password" column="password" jdbcType="VARCHAR"/>
             <result property="isvip" column="isVIP" jdbcType="TINYINT"/>
+            <result property="bookId" column="book_id" jdbcType="TINYINT"/>
             <result property="avatarPath" column="avatar_path" jdbcType="VARCHAR"/>
             <result property="learningLevel" column="learning_level" jdbcType="TINYINT"/>
             <result property="phone" column="phone" jdbcType="VARCHAR"/>
             <result property="userMail" column="user_mail" jdbcType="VARCHAR"/>
             <result property="openId" column="open_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -21,9 +24,44 @@
         isVIP,avatar_path,learning_level,
         phone,user_mail,open_id
     </sql>
-    <select id="getOpenId" resultMap="BaseResultMap">
+    <select id="selectByOpenId" resultMap="BaseResultMap" resultType="com.mandarin_mate.pojo.User">
         select open_id
         from user
     </select>
-    <select id="selectByOpenid" resultType="com.mandarin_mate.pojo.User"></select>
+
+    <update id="updateInfo" parameterType="com.mandarin_mate.pojo.dto.UserDTO">
+        update user
+        <set>
+            <if test="nickName != null">
+                nick_name = #{nickName},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="bookId != null">
+                book_id = #{bookId},
+            </if>
+            <if test="avatarPath != null">
+                avatar_path = #{avatarPath},
+            </if>
+            <if test="learningLevel != null">
+                learning_level = #{learningLevel},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="userMail != null">
+                user_mail = #{userMail},
+            </if>
+            update_time = NOW()
+        </set>
+        where user_id = #{userId}
+
+    </update>
+
+
+
+
+
+
 </mapper>

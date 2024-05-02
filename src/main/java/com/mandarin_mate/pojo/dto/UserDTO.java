@@ -5,27 +5,33 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
- * @BelongsProject: Mandarin-Mate-Server
- * @BelongsPackage: com.mandrain_mate.pojo.dto
- * @Author: kc
- * @CreateTime: 2023-10-28  13:39
- * @Description: 用户登录数据模型
- * @Version: 1.0
+ * @auther Keepl
+ * @description
+ * @Version 1.0.0
+ * @date 2024/5/2
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLoginDTO {
+public class UserDTO {
+
     private Long userId;
 
+    private String nickName;
+
     private String password;
+
+    private String avatarPath;
+
+    private Long bookId;
+
+    private Integer learningLevel;
 
     private String phone;
 
     private String userMail;
-
-    //微信登录要用到code
-    private String code;
 }

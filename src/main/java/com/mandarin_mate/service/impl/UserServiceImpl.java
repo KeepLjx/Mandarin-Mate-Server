@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mandarin_mate.constant.MessageConstant;
 import com.mandarin_mate.exception.LoginFailedException;
 import com.mandarin_mate.pojo.User;
+import com.mandarin_mate.pojo.dto.UserDTO;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
 import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
 import com.mandarin_mate.properties.WeChatProperties;
@@ -64,6 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setUserMail(registerUser.getUserMail());
         user.setAvatarPath("defult");  // 设置默认头像
         user.setIsvip(0);  // 默认非vip用户
+        user.setCreateTime(LocalDateTime.now());
         int insert = userMapper.insert(user);
         if( insert != 0 ){
             return Result.ok(null);
@@ -163,7 +165,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         //判断当前用户是否为新用户
-        User user = userMapper.selectByOpenid(openid);
+        User user = userMapper.selectByOpenId(openid);
 
         //如果是新用户，自动完成注册
 
@@ -176,6 +178,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         //返回这个用户对象
         return user;
+    }
+
+    /**
+     * 更新用户信息
+     * @param userDTO
+     */
+    @Override
+    public void updateInfo(UserDTO userDTO) {
+        userMapper.updateInfo(userDTO);
     }
 
     /**

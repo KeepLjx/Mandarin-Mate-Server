@@ -2,6 +2,7 @@ package com.mandarin_mate.service;
 
 import com.mandarin_mate.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mandarin_mate.pojo.dto.UserDTO;
 import com.mandarin_mate.pojo.dto.UserLoginDTO;
 import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
 import com.mandarin_mate.utils.Result;
@@ -48,4 +49,10 @@ public interface UserService extends IService<User> {
      * @return
      */
     User wxLogin(UserLoginDTO userLoginDTO);
+
+    /**
+     * 更新用户信息
+     * @param userDTO
+     */
+    void updateInfo(UserDTO userDTO);
 }
