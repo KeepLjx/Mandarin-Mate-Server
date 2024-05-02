@@ -34,4 +34,10 @@ public class UserDTO {
     private String phone;
 
     private String userMail;
+
+    public UserDTO(Long bookId) {
+        this.bookId = bookId;
+    }
 }
+
+

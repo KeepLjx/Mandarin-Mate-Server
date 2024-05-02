@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mandarin_mate.constant.MessageConstant;
+import com.mandarin_mate.mapper.UserMapper;
 import com.mandarin_mate.pojo.Schedule;
+import com.mandarin_mate.pojo.dto.UserDTO;
 import com.mandarin_mate.service.ScheduleService;
 import com.mandarin_mate.mapper.ScheduleMapper;
 import com.mandarin_mate.utils.JwtHelper;
 import com.mandarin_mate.utils.Result;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,10 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
 
     @Autowired
     private ScheduleMapper scheduleMapper;
+
+    @Resource
+    private UserMapper userMapper;
+
     @Autowired
     private JwtHelper jwtHelper;
     /**
@@ -38,10 +45,12 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
     public Result buildSchedule(Long bookId, String token) {
         Long userId = jwtHelper.getUserId(token);
         List<Schedule> schedules = scheduleMapper.selectScheduleByUserIdAndBookId(bookId, userId);
+        userMapper.updateInfo(new UserDTO(bookId));
         if (!(schedules == null || schedules.size() == 0)) {
             return Result.ok(MessageConstant.PROGRESS_CREATED);
         }
         Schedule schedule = new Schedule();
+        //修改用户信息中的词书信息
         schedule.setBookId(bookId);
         schedule.setUserId(userId);
         schedule.setCompleted(0L);
@@ -93,6 +102,8 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         Schedule schedule = new Schedule();
         schedule.setIsDelete(1);
         scheduleMapper.update(schedule,scheduleLambdaUpdateWrapperClose);
+        //修改用户信息中的词书信息
+        userMapper.updateInfo(new UserDTO(switchBookId));
         System.out.println(scheduleTemp);
         //如果有则恢复学习进度
         if(scheduleTemp != null){
