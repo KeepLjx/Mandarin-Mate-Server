@@ -1,8 +1,10 @@
 package com.mandarin_mate.pojo.vo;
 
 import com.mandarin_mate.pojo.Book;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.LinkedList;
 
@@ -16,6 +18,8 @@ import java.util.LinkedList;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookVO {
     private String bookLevel;
     private LinkedList<Book> books;

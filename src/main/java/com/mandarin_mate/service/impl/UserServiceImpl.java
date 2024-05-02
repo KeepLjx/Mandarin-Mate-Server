@@ -8,9 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mandarin_mate.constant.MessageConstant;
 import com.mandarin_mate.exception.LoginFailedException;
 import com.mandarin_mate.pojo.User;
-import com.mandarin_mate.pojo.dto.UserDTO;
-import com.mandarin_mate.pojo.dto.UserLoginDTO;
-import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
+import com.mandarin_mate.pojo.dto.*;
 import com.mandarin_mate.properties.WeChatProperties;
 import com.mandarin_mate.service.UserService;
 import com.mandarin_mate.mapper.UserMapper;
@@ -22,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -157,21 +156,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @return
      */
     public User wxLogin(UserLoginDTO userLoginDTO) {
-        String openid = getOpenid(userLoginDTO.getCode());
+        String openId = getOpenid(userLoginDTO.getCode());
 
         //判断openid是否为空，如果为空表示登录失败，抛出业务异常
-        if(openid == null) {
+        if(openId == null) {
             throw new LoginFailedException(MessageConstant.LOGIN_FAILED);
         }
 
         //判断当前用户是否为新用户
-        User user = userMapper.selectByOpenId(openid);
+        User user = userMapper.selectByOpenId(openId);
 
         //如果是新用户，自动完成注册
 
         if(user == null) {
             user = User.builder()
-                    .openId(openid)
+                    .openId(openId)
                     .createTime(LocalDateTime.now())
                     .build();
             userMapper.insert(user);
@@ -187,6 +186,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public void updateInfo(UserDTO userDTO) {
         userMapper.updateInfo(userDTO);
+    }
+
+    /**
+     * 用户绑定邮箱
+     * @param bindMailDTO
+     */
+    @Override
+    public String bindMail(BindMailDTO bindMailDTO) {
+        List<String> mails = userMapper.selectUserMail();
+        if (mails.contains(bindMailDTO.getUserMail())) {
+            return MessageConstant.HAS_USED;
+        }
+        userMapper.updateInfo(new BindMailDTO(bindMailDTO.getUserId(),bindMailDTO.getUserMail(),bindMailDTO.getPassword()));
+        return MessageConstant.SUCCESS;
+    }
+
+    /**
+     * 用户绑定微信
+     * @param bindWeChatDTO
+     * @return
+     */
+    @Override
+    public String bindWeChat(BindWeChatDTO bindWeChatDTO) {
+        String openId = getOpenid(bindWeChatDTO.getCode());
+        if (openId == null) {
+            return MessageConstant.UNKNOWN_ERROR;
+        }
+        List<String> openIds = userMapper.selectOpenId();
+        if (openIds.contains(openId)) {
+            return MessageConstant.HAS_USED;
+        }
+        userMapper.updateInfo(new BindWeChatDTO(bindWeChatDTO.getUserId(), openId));
+
+        return MessageConstant.SUCCESS;
     }
 
     /**

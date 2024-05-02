@@ -2,9 +2,7 @@ package com.mandarin_mate.service;
 
 import com.mandarin_mate.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mandarin_mate.pojo.dto.UserDTO;
-import com.mandarin_mate.pojo.dto.UserLoginDTO;
-import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
+import com.mandarin_mate.pojo.dto.*;
 import com.mandarin_mate.utils.Result;
 
 /**
@@ -55,4 +53,16 @@ public interface UserService extends IService<User> {
      * @param userDTO
      */
     void updateInfo(UserDTO userDTO);
+
+    /**
+     * 用户绑定邮箱
+     * @param bindMailDTO
+     */
+    String bindMail(BindMailDTO bindMailDTO);
+
+    /**
+     * 用户绑定微信
+     * @param bindWeChatDTO
+     */
+    String bindWeChat(BindWeChatDTO bindWeChatDTO);
 }

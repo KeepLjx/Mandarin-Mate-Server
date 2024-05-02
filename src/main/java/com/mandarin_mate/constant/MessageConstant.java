@@ -4,14 +4,17 @@ package com.mandarin_mate.constant;
  * 信息提示常量类
  */
 public class MessageConstant {
-    public static final String PASSWORD_ERROR = "密码错误";
-    public static final String ACCOUNT_NOT_FOUND = "账号不存在";
-    public static final String ACCOUNT_LOCKED = "账号被锁定";
-    public static final String ALREADY_EXISTS = "已存在";
-    public static final String UNKNOWN_ERROR = "未知错误";
-    public static final String USER_NOT_LOGIN = "用户未登录";
-    public static final String LOGIN_FAILED = "登录失败";
-    public static final String UPLOAD_FAILED = "文件上传失败";
-    public static final String PASSWORD_EDIT_FAILED = "密码修改失败";
-    public static final String PROGRESS_CREATED = "进度已创建";
+    public static final String PASSWORD_ERROR = "Password error.";
+    public static final String ACCOUNT_NOT_FOUND = "Account not found.";
+    public static final String ACCOUNT_LOCKED = "Account locked.";
+    public static final String ALREADY_EXISTS = "Already exists.";
+    public static final String UNKNOWN_ERROR = "Unknown error.";
+    public static final String USER_NOT_LOGIN = "User not login.";
+    public static final String LOGIN_FAILED = "Login failed.";
+    public static final String UPLOAD_FAILED = "Upload failed.";
+    public static final String PASSWORD_EDIT_FAILED = "Password edit failed.";
+    public static final String PROGRESS_CREATED = "Progress created.";
+    //该邮箱已被注册 The email address has been registered
+    public static final String HAS_USED = "Has used";//邮箱已经被绑定
+    public static final String SUCCESS = "Success.";
 }

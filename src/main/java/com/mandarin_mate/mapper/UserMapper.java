@@ -1,4 +1,6 @@
 package com.mandarin_mate.mapper;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import com.mandarin_mate.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -24,7 +26,25 @@ public interface UserMapper extends BaseMapper<User> {
     /**
      * 更新用户的bookId
      */
-    void updateInfo(UserDTO userDTO);
+    void updateInfo(Object Object);
+
+    /**
+     * 获取用户信息
+     */
+    UserDTO getAllByUserId(@Param("userId") Long userId);
+
+    /**
+     * 获取所有注册过的邮箱
+     * @return
+     */
+    List<String> selectUserMail();
+
+    /**
+     * 获取所有注册过的邮箱
+     * @return
+     */
+    List<String> selectOpenId();
+
 }
 
 

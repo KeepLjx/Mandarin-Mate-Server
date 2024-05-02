@@ -21,7 +21,7 @@
 
     <sql id="Base_Column_List">
         user_id,nick_name,password,
-        isVIP,avatar_path,learning_level,
+        isVIP,book_id,avatar_path,learning_level,
         phone,user_mail,open_id
     </sql>
     <select id="selectByOpenId" resultMap="BaseResultMap" resultType="com.mandarin_mate.pojo.User">
@@ -29,7 +29,7 @@
         from user
     </select>
 
-    <update id="updateInfo" parameterType="com.mandarin_mate.pojo.dto.UserDTO">
+    <update id="updateInfo" parameterType="com.mandarin_mate.pojo.User">
         update user
         <set>
             <if test="nickName != null">
@@ -53,15 +53,30 @@
             <if test="userMail != null">
                 user_mail = #{userMail},
             </if>
+            <if test="openId != null">
+                open_id = #{openId},
+            </if>
             update_time = NOW()
         </set>
         where user_id = #{userId}
 
     </update>
 
-
-
-
+    <select id="getAllByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where
+        user_id = #{userId,jdbcType=NUMERIC}
+    </select>
+    <select id="selectUserMail" resultType="java.lang.String">
+        select user_mail
+        from user
+    </select>
+    <select id="selectOpenId" resultType="java.lang.String" >
+        select open_id
+        from user
+    </select>
 
 
 </mapper>

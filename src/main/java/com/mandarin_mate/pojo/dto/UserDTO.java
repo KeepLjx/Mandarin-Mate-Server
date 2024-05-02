@@ -35,9 +35,18 @@ public class UserDTO {
 
     private String userMail;
 
-    public UserDTO(Long bookId) {
+    public UserDTO(Long userId, Long bookId) {
+        this.userId = userId;
         this.bookId = bookId;
     }
+
+    public UserDTO(Long userId, String userMail, String password) {
+        this.userId = userId;
+        this.userMail = userMail;
+        this.password = password;
+    }
+
+
 }
 
 

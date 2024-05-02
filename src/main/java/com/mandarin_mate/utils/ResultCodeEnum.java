@@ -10,13 +10,13 @@ public enum ResultCodeEnum {
     USERNAME_ERROR(501,"usernameError"),
     PASSWORD_ERROR(503,"passwordError"),
     NOTLOGIN(504,"notLogin"),
-    REGISTER_ERROR(506,"服务器注册失败"),
-    USER_NULL(2,"用户为空，请注册"),
-    USER_LOGIN_NULL(3,"传入参数为空,请输入"),
-    USERNAME_USED(505,"userNameUsed"),
-    EMail_ERROR(4,"邮件发送失败，请重新尝试"),
-    Email_exist(6,"该邮箱已注册过，请勿重复注册"),
-    REGISTER_CODE_EMail_ERROR(5, "验证码输入错误");
+    REGISTER_ERROR(506,"Registration failure."),
+    USER_NULL(2,"Please register."),
+    USER_LOGIN_NULL(3,"Please Input"),
+    USERNAME_USED(505,"UserName Used"),
+    EMail_ERROR(4,"Failed,please try again."),
+    Email_exist(6,"Has already registered."),
+    REGISTER_CODE_EMail_ERROR(5, "Code error");
 
     private Integer code;
     private String message;

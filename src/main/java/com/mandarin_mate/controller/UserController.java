@@ -6,10 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mandarin_mate.mapper.WordsInfoMapper;
 import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.pojo.WordsInfo;
-import com.mandarin_mate.pojo.dto.UserDTO;
-import com.mandarin_mate.pojo.dto.UserLoginDTO;
-import com.mandarin_mate.pojo.dto.UserRegisterFormDTO;
-import com.mandarin_mate.pojo.dto.WordsInfoDTO;
+import com.mandarin_mate.pojo.dto.*;
 import com.mandarin_mate.pojo.vo.UserLoginVO;
 import com.mandarin_mate.service.impl.MailServiceImpl;
 import com.mandarin_mate.service.impl.UserServiceImpl;
@@ -94,6 +91,29 @@ public class UserController {
     public Result login(@RequestBody UserLoginDTO userLoginDTO) {
         Result result = userService.login(userLoginDTO);
         return result;
+    }
+
+    /**
+     * 绑定邮箱
+     * @param bindMailDTO
+     * @return
+     */
+    @PostMapping("bindMail")
+    public Result BindMail(@RequestHeader String token, @RequestBody BindMailDTO bindMailDTO) {
+        String result = userService.bindMail(bindMailDTO);
+        return Result.ok(result);
+    }
+
+    /**
+     * 绑定微信接口
+     * @param token
+     * @param bindWeChatDTO
+     * @return
+     */
+    @PostMapping("bindWeChat")
+    public Result BindWeChat(@RequestHeader String token, @RequestBody BindWeChatDTO bindWeChatDTO){
+        String result = userService.bindWeChat(bindWeChatDTO);
+        return Result.ok(result);
     }
 
     /**

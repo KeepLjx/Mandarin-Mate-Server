@@ -45,7 +45,7 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
     public Result buildSchedule(Long bookId, String token) {
         Long userId = jwtHelper.getUserId(token);
         List<Schedule> schedules = scheduleMapper.selectScheduleByUserIdAndBookId(bookId, userId);
-        userMapper.updateInfo(new UserDTO(bookId));
+        userMapper.updateInfo(new UserDTO(userId,bookId));
         if (!(schedules == null || schedules.size() == 0)) {
             return Result.ok(MessageConstant.PROGRESS_CREATED);
         }
@@ -103,7 +103,7 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         schedule.setIsDelete(1);
         scheduleMapper.update(schedule,scheduleLambdaUpdateWrapperClose);
         //修改用户信息中的词书信息
-        userMapper.updateInfo(new UserDTO(switchBookId));
+        userMapper.updateInfo(new UserDTO(userId, switchBookId));
         System.out.println(scheduleTemp);
         //如果有则恢复学习进度
         if(scheduleTemp != null){
