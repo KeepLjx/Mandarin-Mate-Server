@@ -19,6 +19,5 @@ public class BindMailDTO {
     private Long userId;
     private String userMail;
     private String password;
-
 }
 

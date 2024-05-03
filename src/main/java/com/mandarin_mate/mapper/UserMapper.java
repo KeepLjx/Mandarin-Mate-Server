@@ -26,7 +26,7 @@ public interface UserMapper extends BaseMapper<User> {
     /**
      * 更新用户的bookId
      */
-    void updateInfo(Object Object);
+    void updateInfo(Object object);
 
     /**
      * 获取用户信息

@@ -29,7 +29,7 @@
         from user
     </select>
 
-    <update id="updateInfo" parameterType="com.mandarin_mate.pojo.User">
+    <update id="updateInfo" parameterType="java.lang.Object">
         update user
         <set>
             <if test="nickName != null">

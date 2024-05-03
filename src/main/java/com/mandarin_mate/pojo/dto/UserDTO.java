@@ -27,6 +27,8 @@ public class UserDTO {
 
     private String avatarPath;
 
+    private String openId;
+
     private Long bookId;
 
     private Integer learningLevel;

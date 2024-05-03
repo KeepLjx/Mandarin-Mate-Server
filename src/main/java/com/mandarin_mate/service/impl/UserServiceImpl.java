@@ -24,13 +24,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* @author lenovo
-* @description 针对表【user(用户信息表)】的数据库操作Service实现
-* @createDate 2023-10-27 23:02:06
-*/
+ * @author lenovo
+ * @description 针对表【user(用户信息表)】的数据库操作Service实现
+ * @createDate 2023-10-27 23:02:06
+ */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-    implements UserService{
+        implements UserService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -47,6 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     /**
      * 用户注册业务实现
+     *
      * @param registerUser
      * @return
      */
@@ -54,7 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public Result register(UserRegisterFormDTO registerUser) {
         //验证码是否正确
         String code = registerUser.getRegisterCode();
-        String redisCode  = stringRedisTemplate.opsForValue().get(Constans.RedisConstants.LOGIN_CODE_KEY + registerUser.getUserMail());
+        String redisCode = stringRedisTemplate.opsForValue().get(Constans.RedisConstants.LOGIN_CODE_KEY + registerUser.getUserMail());
         if (redisCode == null || !redisCode.contains(code)) {
             return Result.build(null, ResultCodeEnum.REGISTER_CODE_EMail_ERROR);
         }
@@ -66,7 +67,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setIsvip(0);  // 默认非vip用户
         user.setCreateTime(LocalDateTime.now());
         int insert = userMapper.insert(user);
-        if( insert != 0 ){
+        if (insert != 0) {
             return Result.ok(null);
         }
         return Result.build(null, ResultCodeEnum.REGISTER_ERROR);
@@ -74,6 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     /**
      * 用户登录业务实现
+     *
      * @param userLoginDTO
      * @return
      */
@@ -81,36 +83,37 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public Result login(UserLoginDTO userLoginDTO) {
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
         //判断传入参数有哪一个属性
-        if(userLoginDTO.getUserId() != null && userLoginDTO.getUserId() != 0){
-            userLambdaQueryWrapper.eq(User::getUserId,userLoginDTO.getUserId());
-        }else if(userLoginDTO.getUserMail() != null && !userLoginDTO.getUserMail().equals("")){
-            userLambdaQueryWrapper.eq(User::getUserMail,userLoginDTO.getUserMail());
-        }else if(userLoginDTO.getPhone() != null && !userLoginDTO.getPhone().equals("")){
-            userLambdaQueryWrapper.eq(User::getPhone,userLoginDTO.getPhone());
-        }else{
-            return Result.build(null,ResultCodeEnum.USER_LOGIN_NULL);
+        if (userLoginDTO.getUserId() != null && userLoginDTO.getUserId() != 0) {
+            userLambdaQueryWrapper.eq(User::getUserId, userLoginDTO.getUserId());
+        } else if (userLoginDTO.getUserMail() != null && !userLoginDTO.getUserMail().equals("")) {
+            userLambdaQueryWrapper.eq(User::getUserMail, userLoginDTO.getUserMail());
+        } else if (userLoginDTO.getPhone() != null && !userLoginDTO.getPhone().equals("")) {
+            userLambdaQueryWrapper.eq(User::getPhone, userLoginDTO.getPhone());
+        } else {
+            return Result.build(null, ResultCodeEnum.USER_LOGIN_NULL);
         }
         //根据相关属性加入条件进行查询
         User user = userMapper.selectOne(userLambdaQueryWrapper);
         //用户为空返回错误信息
-        if(user == null){
-            return Result.build(null,ResultCodeEnum.USER_NULL);
+        if (user == null) {
+            return Result.build(null, ResultCodeEnum.USER_NULL);
         }
         //成功返回token
-        if(user.getPassword().equals(userLoginDTO.getPassword())){
+        if (user.getPassword().equals(userLoginDTO.getPassword())) {
             String token = jwtHelper.createToken(user.getUserId());
             HashMap<Object, Object> map = new HashMap<>();
             user.setPassword("");
-            map.put("token",token);
-            map.put("userInfo",user);
+            map.put("token", token);
+            map.put("userInfo", user);
             return Result.ok(map);
-        }else{
-            return Result.build(null,ResultCodeEnum.PASSWORD_ERROR);
+        } else {
+            return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
         }
     }
 
     /**
      * 更新用户存储头像路径业务实现
+     *
      * @param filename
      * @param token
      */
@@ -122,8 +125,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         Long userId = jwtHelper.getUserId(token);
         //将文件路径加入用户数据库中
         LambdaUpdateWrapper<User> userLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
-        userLambdaUpdateWrapper.eq(User::getUserId,userId);
-        userMapper.update(user,userLambdaUpdateWrapper);
+        userLambdaUpdateWrapper.eq(User::getUserId, userId);
+        userMapper.update(user, userLambdaUpdateWrapper);
 //        LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
 //        userLambdaQueryWrapper.eq(User::getUserId,userId);
 //        User user = userMapper.selectOne(userLambdaQueryWrapper);
@@ -133,6 +136,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     /**
      * 获取用户信息业务实现
+     *
      * @param token
      * @return
      */
@@ -142,16 +146,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         Long userId = jwtHelper.getUserId(token);
         //查询用户并返回
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        userLambdaQueryWrapper.eq(User::getUserId,userId);
+        userLambdaQueryWrapper.eq(User::getUserId, userId);
         User user = userMapper.selectOne(userLambdaQueryWrapper);
         user.setPassword("");
         HashMap map = new HashMap();
-        map.put("userInfo",user);
+        map.put("userInfo", user);
         return Result.ok(map);
     }
 
     /**
      * 微信登录
+     *
      * @param userLoginDTO
      * @return
      */
@@ -159,7 +164,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String openId = getOpenid(userLoginDTO.getCode());
 
         //判断openid是否为空，如果为空表示登录失败，抛出业务异常
-        if(openId == null) {
+        if (openId == null) {
             throw new LoginFailedException(MessageConstant.LOGIN_FAILED);
         }
 
@@ -168,7 +173,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         //如果是新用户，自动完成注册
 
-        if(user == null) {
+        if (user == null) {
             user = User.builder()
                     .openId(openId)
                     .createTime(LocalDateTime.now())
@@ -181,6 +186,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     /**
      * 更新用户信息
+     *
      * @param userDTO
      */
     @Override
@@ -190,6 +196,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     /**
      * 用户绑定邮箱
+     *
      * @param bindMailDTO
      */
     @Override
@@ -198,12 +205,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (mails.contains(bindMailDTO.getUserMail())) {
             return MessageConstant.HAS_USED;
         }
-        userMapper.updateInfo(new BindMailDTO(bindMailDTO.getUserId(),bindMailDTO.getUserMail(),bindMailDTO.getPassword()));
+        UserDTO userDTO = new UserDTO().builder()
+                .userId(bindMailDTO.getUserId())
+                .userMail(bindMailDTO.getUserMail())
+                .password(bindMailDTO.getPassword())
+                .build();
+        userMapper.updateInfo(userDTO);
         return MessageConstant.SUCCESS;
     }
 
     /**
      * 用户绑定微信
+     *
      * @param bindWeChatDTO
      * @return
      */
@@ -217,23 +230,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (openIds.contains(openId)) {
             return MessageConstant.HAS_USED;
         }
-        userMapper.updateInfo(new BindWeChatDTO(bindWeChatDTO.getUserId(), openId));
+        UserDTO userDTO = new UserDTO().builder()
+                        .userId(bindWeChatDTO.getUserId())
+                                .openId(openId)
+                                        .build();
+        userMapper.updateInfo(userDTO);
 
         return MessageConstant.SUCCESS;
     }
 
     /**
      * 调用微信接口服务，获取微信用户的openid
+     *
      * @param code
      * @return
      */
     private String getOpenid(String code) {
         //调用微信接口服务，获得当前微信用户的openid
         Map<String, String> map = new HashMap<>();
-        map.put("appid",weChatProperties.getAppid());
-        map.put("secret",weChatProperties.getSecret());
-        map.put("js_code",code);
-        map.put("grant_type","authorization_code");
+        map.put("appid", weChatProperties.getAppid());
+        map.put("secret", weChatProperties.getSecret());
+        map.put("js_code", code);
+        map.put("grant_type", "authorization_code");
         String json = HttpClientUtil.doGet(WX_LOGIN, map);
 
         JSONObject jsonObject = JSON.parseObject(json);
