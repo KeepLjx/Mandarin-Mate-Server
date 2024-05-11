@@ -43,4 +43,21 @@ public interface ScheduleService extends IService<Schedule> {
      * @return
      */
     Result resetSchedule(String token, Long bookId);
+
+    /**
+     * 更新用户学习进度
+     * @param token
+     * @param bookId
+     * @return
+     */
+    Result addSchedule(String token, Long bookId, Long wordsId);
+
+    /**
+     * 用户删除复习模块中已经熟练的单词
+     * @param token
+     * @param bookId
+     * @param wordsId
+     * @return
+     */
+    Result deleteSchedule(String token, Long bookId, Long wordsId);
 }

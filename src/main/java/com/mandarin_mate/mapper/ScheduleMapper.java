@@ -1,4 +1,5 @@
 package com.mandarin_mate.mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.mandarin_mate.pojo.Schedule;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -16,7 +17,12 @@ import java.util.List;
 public interface ScheduleMapper extends BaseMapper<Schedule> {
 
 
-    List<Schedule> selectScheduleByUserIdAndBookId(Long bookId, Long userId);
+    Schedule selectScheduleByUserIdAndBookId(Long bookId, Long userId);
+
+    int updateCompletedByBookIdAndUserId(@Param("completed") String completed, @Param("bookId") Long bookId, @Param("userId") Long userId);
+
+    int updateReviewByBookIdAndUserId(@Param("review") String review, @Param("bookId") Long bookId, @Param("userId") Long userId);
+
 }
 
 

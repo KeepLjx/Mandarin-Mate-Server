@@ -8,13 +8,14 @@
             <id property="wordsId" column="words_id" jdbcType="BIGINT"/>
             <result property="bookId" column="book_id" jdbcType="BIGINT"/>
             <result property="wordsSpell" column="words_spell" jdbcType="VARCHAR"/>
+            <result property="wordsPinyin" column="words_pinyin" jdbcType="VARCHAR"/>
             <result property="example" column="example" jdbcType="VARCHAR"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="typeTag" column="type_tag" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        words_id,book_id,words_spell,
+        words_id,book_id,words_spell,words_pinyin,
         example,content,type_tag
     </sql>
     <select id="selectAllByWordsId" resultMap="BaseResultMap">

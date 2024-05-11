@@ -76,10 +76,7 @@ public class BookController {
                                      @RequestParam Long switchBookId){
         Result result = scheduleService.switchBookSchedule(token,nowBookId,switchBookId);
         return result;
-
     }
-
-
     /**
      * 用户重置词书学习进度
      * @param token
@@ -93,7 +90,19 @@ public class BookController {
         return result;
     }
 
-
+    /**
+     * 更新用户学习进度
+     * @param token
+     * @param bookId
+     * @return
+     */
+    @PostMapping("addSchedule")
+    public Result addSchedule(@RequestHeader String token,
+                              @RequestParam Long bookId,
+                              @RequestParam Long wordsId) {
+        Result result = scheduleService.addSchedule(token, bookId, wordsId);
+        return result;
+    }
     /**
      * 获取学习词书的单词信息
      * @param bookId
@@ -104,5 +113,21 @@ public class BookController {
                               @RequestParam Long bookId){
         Result result = wordsInfoService.getBookInfo(bookId);
         return  result;
+    }
+
+
+    /**
+     * 删除复习模块中已经熟练的单词
+     * @param token
+     * @param bookId
+     * @param wordsId
+     * @return
+     */
+    @PostMapping("deleteSchedule")
+    public Result deleteSchedule(@RequestHeader String token,
+                                 @RequestParam Long bookId,
+                                 @RequestParam Long wordsId) {
+        Result result = scheduleService.deleteSchedule(token, bookId, wordsId);
+        return result;
     }
 }

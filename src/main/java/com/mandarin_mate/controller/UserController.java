@@ -149,7 +149,7 @@ public class UserController {
      */
     @PostMapping("/upload")
     //todo 加上api注解
-    @Operation(tags = "什么功能")
+    @Operation(tags = "用户头像自定义上传")
     public Result upload(@RequestBody MultipartFile file, HttpServletRequest request, @RequestHeader String token) {
         if (file == null) {
             return Result.build(null, 0, "头像上传文件为空");
@@ -208,6 +208,6 @@ public class UserController {
         if (wordsInfos == null && wordsInfos.isEmpty()) {
             return Result.build(null, 0, "The word does not exist.");
         }
-        return Result.ok(wordsInfos.get(0).getWordsSpell());
+        return Result.ok(wordsInfos.get(0).getWordsPinyin());
     }
 }

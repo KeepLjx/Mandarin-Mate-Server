@@ -16,7 +16,9 @@ public class Schedule implements Serializable {
 
     private Integer isDelete;
 
-    private Long completed;
+    private String completed;
+
+    private String review;
 
     private static final long serialVersionUID = 1L;
 }

@@ -9,6 +9,7 @@
             <id property="bookId" column="book_id" jdbcType="BIGINT"/>
             <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
             <result property="completed" column="completed" jdbcType="BIGINT"/>
+            <result property="review" column="review" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -16,8 +17,20 @@
         completed
     </sql>
     <select id="selectScheduleByUserIdAndBookId" resultType="com.mandarin_mate.pojo.Schedule">
-        select user_id, book_id, is_delete, completed
+        select user_id, book_id, is_delete, completed, review
         from schedule
         where user_id = #{userId} and book_id = #{bookId};
     </select>
+    <update id="updateCompletedByBookIdAndUserId">
+        update schedule
+        set completed = #{completed,jdbcType=VARCHAR}
+        where book_id = #{bookId,jdbcType=NUMERIC}
+          AND user_id = #{userId,jdbcType=NUMERIC}
+    </update>
+    <update id="updateReviewByBookIdAndUserId">
+        update schedule
+        set review = #{review,jdbcType=VARCHAR}
+        where book_id = #{bookId,jdbcType=NUMERIC}
+          AND user_id = #{userId,jdbcType=NUMERIC}
+    </update>
 </mapper>
