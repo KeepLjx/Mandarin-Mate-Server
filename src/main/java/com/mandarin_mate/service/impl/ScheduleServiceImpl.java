@@ -21,6 +21,7 @@ import javax.swing.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -85,9 +86,11 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         scheduleLambdaQueryWrapper.eq(Schedule::getIsDelete, 0L);
         Schedule schedule = scheduleMapper.selectOne(scheduleLambdaQueryWrapper);
         String[] completed = schedule.getCompleted().split(",");
-        HashMap<Object, Object> map = new HashMap<>();
+        HashMap<Object, Object> map = new LinkedHashMap<>();
         map.put("bookId", schedule.getBookId());
         map.put("schedule", completed.length);
+        map.put("completed",schedule.getCompleted());
+        map.put("review", schedule.getReview());
         return Result.ok(map);
     }
 

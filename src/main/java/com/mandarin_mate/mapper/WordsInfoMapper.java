@@ -17,7 +17,7 @@ import java.util.List;
 public interface WordsInfoMapper extends BaseMapper<WordsInfo> {
 
 
-    List<WordsInfo> selectAllByWordsId(@Param("wordsId") Long wordsId);
+    WordsInfo selectAllByWordsId(@Param("wordsId") Long wordsId);
 }
 
 

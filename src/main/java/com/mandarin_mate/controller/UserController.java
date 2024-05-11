@@ -204,10 +204,10 @@ public class UserController {
 
     @PostMapping("/getWordsInfo")
     public Result getWordsInfo(@RequestBody WordsInfoDTO wordsInfoDTO, @RequestHeader String token) {
-        List<WordsInfo> wordsInfos = wordsInfoMapper.selectAllByWordsId(wordsInfoDTO.getWordsId());
-        if (wordsInfos == null && wordsInfos.isEmpty()) {
+        WordsInfo wordsInfos = wordsInfoMapper.selectAllByWordsId(wordsInfoDTO.getWordsId());
+        if (wordsInfos == null) {
             return Result.build(null, 0, "The word does not exist.");
         }
-        return Result.ok(wordsInfos.get(0).getWordsPinyin());
+        return Result.ok(wordsInfos);
     }
 }
