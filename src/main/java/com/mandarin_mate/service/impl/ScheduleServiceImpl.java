@@ -85,6 +85,9 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         scheduleLambdaQueryWrapper.eq(Schedule::getBookId, bookId);
         scheduleLambdaQueryWrapper.eq(Schedule::getIsDelete, 0L);
         Schedule schedule = scheduleMapper.selectOne(scheduleLambdaQueryWrapper);
+        if (schedule == null) {
+            return Result.ok("schedule is null");
+        }
         String[] completed = schedule.getCompleted().split(",");
         HashMap<Object, Object> map = new LinkedHashMap<>();
         map.put("bookId", schedule.getBookId());
@@ -210,7 +213,7 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         String wordStr = String.valueOf(wordsId);
         Schedule schedule = scheduleMapper.selectScheduleByUserIdAndBookId(userId, bookId);
         String review = schedule.getReview();
-        if (review.indexOf(",") == -1) {
+        if (!review.contains(",")) {
             scheduleMapper.updateReviewByBookIdAndUserId("", bookId, userId);
         } else {
             int exist = review.indexOf(wordStr);

@@ -162,17 +162,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     public User wxLogin(UserLoginDTO userLoginDTO) {
         String openId = getOpenid(userLoginDTO.getCode());
-
         //判断openid是否为空，如果为空表示登录失败，抛出业务异常
         if (openId == null) {
             throw new LoginFailedException(MessageConstant.LOGIN_FAILED);
         }
-
         //判断当前用户是否为新用户
         User user = userMapper.selectByOpenId(openId);
-
         //如果是新用户，自动完成注册
-
         if (user == null) {
             user = User.builder()
                     .openId(openId)
@@ -231,11 +227,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return MessageConstant.HAS_USED;
         }
         UserDTO userDTO = new UserDTO().builder()
-                        .userId(bindWeChatDTO.getUserId())
-                                .openId(openId)
-                                        .build();
+                .userId(bindWeChatDTO.getUserId())
+                .openId(openId)
+                .build();
         userMapper.updateInfo(userDTO);
-
         return MessageConstant.SUCCESS;
     }
 

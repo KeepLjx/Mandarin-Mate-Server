@@ -8,6 +8,7 @@ import com.mandarin_mate.pojo.User;
 import com.mandarin_mate.pojo.WordsInfo;
 import com.mandarin_mate.pojo.dto.*;
 import com.mandarin_mate.pojo.vo.UserLoginVO;
+import com.mandarin_mate.service.CollectionService;
 import com.mandarin_mate.service.impl.MailServiceImpl;
 import com.mandarin_mate.service.impl.UserServiceImpl;
 import com.mandarin_mate.utils.Constans;
@@ -47,10 +48,12 @@ public class UserController {
 
     @Resource
     private MailServiceImpl mailService;
-    @Autowired
+    @Resource
     private JwtHelper jwtHelper;
     @Resource
     private WordsInfoMapper wordsInfoMapper;
+    @Resource
+    private CollectionService collectionService;
 
 
     /**
@@ -210,4 +213,7 @@ public class UserController {
         }
         return Result.ok(wordsInfos);
     }
+
+
+
 }

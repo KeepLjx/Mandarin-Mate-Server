@@ -12,4 +12,23 @@
     <sql id="Base_Column_List">
         user_id,words_id
     </sql>
+    <insert id="insertUserIdAndWordsId">
+        insert into collection (user_id, words_id)
+        values (#{userId}, #{wordsId});
+    </insert>
+
+
+
+    <select id="selectWordsIdByUserId" resultType="java.lang.String">
+        select words_id
+        from collection
+        where user_id = #{userId,jdbcType=NUMERIC}
+    </select>
+    <update id="updateWordsIdByUserId">
+        update collection
+        set words_id = #{wordsId,jdbcType=VARCHAR}
+        where user_id = #{userId,jdbcType=NUMERIC}
+    </update>
+
+
 </mapper>
